@@ -1,15 +1,21 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:giphy_picker/giphy_picker.dart';
+
 /// A general-purpose repository with support for on-demand paged retrieval and caching of values of type T.
 abstract class Repository<T> {
   final HashMap<int, T> _cache = HashMap<int, T>();
   final Set<int> _pagesLoading = Set<int>();
   final HashMap<int, Completer<T>> _completers = HashMap<int, Completer<T>>();
   final int pageSize;
+  final ErrorListener onError;
   int _totalCount;
 
-  Repository({this.pageSize = 25});
+  Repository({this.pageSize, this.onError}) {
+    assert(pageSize != null);
+    assert(onError != null);
+  }
 
   /// The total number of values available.
   int get totalCount => _totalCount;
@@ -24,7 +30,7 @@ abstract class Repository<T> {
 
     final value = _cache[index];
 
-    // value is available
+    // value is availableÍ
     if (value != null) {
       return Future.value(value);
     }
@@ -35,7 +41,7 @@ abstract class Repository<T> {
     if (!_pagesLoading.contains(page)) {
       _pagesLoading.add(page);
       final future = getPage(page);
-      future.then((page) => _onGetPage(page));
+      future.then((page) => _onGetPage(page)).catchError(onError);
     }
 
     // value is being retrieved

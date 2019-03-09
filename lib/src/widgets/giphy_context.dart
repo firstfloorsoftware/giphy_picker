@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giphy_client/giphy_client.dart';
+import 'package:giphy_picker/giphy_picker.dart';
 
 /// Provides the context for a Giphy search operation, and makes its data available to its widget sub-tree.
 class GiphyContext extends InheritedWidget {
@@ -7,6 +8,7 @@ class GiphyContext extends InheritedWidget {
   final String rating;
   final String language;
   final ValueChanged<GiphyGif> onSelected;
+  final ErrorListener onError;
 
   const GiphyContext(
       {Key key,
@@ -14,12 +16,19 @@ class GiphyContext extends InheritedWidget {
       @required this.apiKey,
       this.rating = GiphyRating.g,
       this.language = GiphyLanguage.english,
-      this.onSelected})
+      this.onSelected,
+      this.onError})
       : super(key: key, child: child);
 
   void select(GiphyGif gif) {
     if (onSelected != null) {
       onSelected(gif);
+    }
+  }
+
+  void error(dynamic error) {
+    if (onError != null) {
+      onError(error);
     }
   }
 

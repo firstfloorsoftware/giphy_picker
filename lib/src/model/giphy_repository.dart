@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:giphy_client/giphy_client.dart';
 import 'package:giphy_picker/src/model/repository.dart';
-import 'package:giphy_picker/src/widgets/giphy_image.dart';
+import 'package:giphy_picker/giphy_picker.dart';
 import 'package:http/http.dart' as http;
 
 typedef Future<GiphyCollection> GetCollection(
@@ -24,7 +24,10 @@ class GiphyRepository extends Repository<GiphyGif> {
   GiphyRepository(
       {@required String apiKey,
       @required this.getCollection,
-      this.maxConcurrentPreviewLoad = 4}) {
+      this.maxConcurrentPreviewLoad = 4,
+      int pageSize = 25,
+      ErrorListener onError})
+      : super(pageSize: pageSize, onError: onError) {
     assert(getCollection != null);
     assert(maxConcurrentPreviewLoad != null);
     _giphyClient = GiphyClient(apiKey: apiKey, client: _client);
@@ -104,11 +107,14 @@ class GiphyRepository extends Repository<GiphyGif> {
 
   /// The repository of trending gif images.
   static Future<GiphyRepository> trending(
-      {@required String apiKey, String rating = GiphyRating.g}) async {
+      {@required String apiKey,
+      String rating = GiphyRating.g,
+      ErrorListener onError}) async {
     final repo = GiphyRepository(
         apiKey: apiKey,
         getCollection: (client, offset, limit) =>
-            client.trending(offset: offset, limit: limit, rating: rating));
+            client.trending(offset: offset, limit: limit, rating: rating),
+        onError: onError);
 
     // retrieve first page
     await repo.get(0);
@@ -121,11 +127,13 @@ class GiphyRepository extends Repository<GiphyGif> {
       {@required String apiKey,
       @required String query,
       String rating = GiphyRating.g,
-      String lang = GiphyLanguage.english}) async {
+      String lang = GiphyLanguage.english,
+      ErrorListener onError}) async {
     final repo = GiphyRepository(
         apiKey: apiKey,
         getCollection: (client, offset, limit) => client.search(query,
-            offset: offset, limit: limit, rating: rating, lang: lang));
+            offset: offset, limit: limit, rating: rating, lang: lang),
+        onError: onError);
 
     // retrieve first page
     await repo.get(0);

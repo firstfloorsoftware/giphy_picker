@@ -8,6 +8,8 @@ import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 
 export 'package:giphy_picker/src/widgets/giphy_image.dart';
 
+typedef ErrorListener = void Function(dynamic error);
+
 /// Provides Giphy picker functionality.
 class GiphyPicker {
   /// Renders a full screen modal dialog for searching, and selecting a Giphy image.
@@ -16,7 +18,8 @@ class GiphyPicker {
       @required String apiKey,
       String rating = GiphyRating.g,
       String lang = GiphyLanguage.english,
-      Widget title}) async {
+      Widget title,
+      ErrorListener onError}) async {
     GiphyGif result;
 
     await Navigator.push(
@@ -27,6 +30,7 @@ class GiphyPicker {
                 apiKey: apiKey,
                 rating: rating,
                 language: lang,
+                onError: onError ?? (error) => _showErrorDialog(context, error),
                 onSelected: (gif) {
                   result = gif;
 
@@ -35,5 +39,25 @@ class GiphyPicker {
             fullscreenDialog: true));
 
     return result;
+  }
+
+  static void _showErrorDialog(BuildContext context, dynamic error) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text('Giphy error'),
+          content: new Text('An error occurred. $error'),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

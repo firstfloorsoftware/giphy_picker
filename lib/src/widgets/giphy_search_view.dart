@@ -80,19 +80,28 @@ class _GiphySearchViewState extends State<GiphySearchView> {
     if (term != _textController.text) {
       return;
     }
-    // search, or trending when term is empty
-    final repo = await (term.isEmpty
-        ? GiphyRepository.trending(apiKey: giphy.apiKey, rating: giphy.rating)
-        : GiphyRepository.search(
-            apiKey: giphy.apiKey,
-            query: term,
-            rating: giphy.rating,
-            lang: giphy.language));
 
-    // scroll up
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(0);
+    try {
+      // search, or trending when term is empty
+      final repo = await (term.isEmpty
+          ? GiphyRepository.trending(
+              apiKey: giphy.apiKey,
+              rating: giphy.rating,
+              onError: giphy.onError)
+          : GiphyRepository.search(
+              apiKey: giphy.apiKey,
+              query: term,
+              rating: giphy.rating,
+              lang: giphy.language,
+              onError: giphy.onError));
+
+      // scroll up
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
+      _repoController.add(repo);
+    } catch (error) {
+      giphy.onError(error);
     }
-    _repoController.add(repo);
   }
 }
