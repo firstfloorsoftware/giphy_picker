@@ -1,8 +1,8 @@
 name: giphy_picker
-description: A new Flutter package project.
+description: A plugin that allows you to pick animated GIF images from Giphy.
 version: 0.0.1
-author:
-homepage:
+author: First Floor Software <info@firstfloorsoftware.com>
+homepage: https://github.com/firstfloorsoftware/giphy_picker
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
