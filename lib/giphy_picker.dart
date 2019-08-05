@@ -34,7 +34,8 @@ class GiphyPicker {
                 onSelected: (gif) {
                   result = gif;
 
-                  Navigator.popUntil(context, (Route route) => route.isFirst);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 }),
             fullscreenDialog: true));
 
