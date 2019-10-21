@@ -62,7 +62,9 @@ class _GiphySearchViewState extends State<GiphySearchView> {
                             // hide keyboard when scrolling
                             if (n is UserScrollNotification) {
                               FocusScope.of(context).requestFocus(FocusNode());
+                              return true;
                             }
+                            return false;
                           },
                         )
                       : Center(child: Text('No results'));
