@@ -2,6 +2,7 @@ library giphy_picker;
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:giphy_client/giphy_client.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
@@ -34,7 +35,8 @@ class GiphyPicker {
                 onSelected: (gif) {
                   result = gif;
 
-                  Navigator.popUntil(context, (Route route) => route.isFirst);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 }),
             fullscreenDialog: true));
 
