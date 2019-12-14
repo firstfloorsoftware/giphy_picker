@@ -40,8 +40,9 @@ abstract class Repository<T> {
     // value is not available, retrieve page
     if (!_pagesLoading.contains(page)) {
       _pagesLoading.add(page);
-      final future = getPage(page);
-      future.then((page) => _onGetPage(page)).catchError(onError);
+      getPage(page).then(_onPageRetrieved,
+          onError: (error, stackTrace) =>
+              _onPageError(page, error, stackTrace));
     }
 
     // value is being retrieved
@@ -54,7 +55,7 @@ abstract class Repository<T> {
     return completer.future;
   }
 
-  void _onGetPage(Page<T> page) {
+  void _onPageRetrieved(Page<T> page) {
     _pagesLoading.remove(page);
     _totalCount = page.totalCount;
 
@@ -73,6 +74,17 @@ abstract class Repository<T> {
         final completer = _completers.remove(index);
         completer?.complete(value);
       }
+    }
+  }
+
+  void _onPageError(int page, Object error, StackTrace stackTrace) {
+    _pagesLoading.remove(page);
+
+    // complete completers of this page with an error
+    for (var i = 0; i < pageSize; i++) {
+      final index = page * pageSize + i;
+      final completer = _completers.remove(index);
+      completer?.completeError(error, stackTrace);
     }
   }
 

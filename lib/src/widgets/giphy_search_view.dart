@@ -68,6 +68,8 @@ class _GiphySearchViewState extends State<GiphySearchView> {
                           },
                         )
                       : Center(child: Text('No results'));
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('An error occurred'));
                 }
                 return Center(child: CircularProgressIndicator());
               }))
@@ -103,6 +105,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
       }
       _repoController.add(repo);
     } catch (error) {
+      _repoController.addError(error);
       giphy.onError(error);
     }
   }
