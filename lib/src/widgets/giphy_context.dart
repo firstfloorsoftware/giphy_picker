@@ -37,7 +37,7 @@ class GiphyContext extends InheritedWidget {
 
   static GiphyContext of(BuildContext context) {
     final settings = context
-        .ancestorInheritedElementForWidgetOfExactType(GiphyContext)
+        .getElementForInheritedWidgetOfExactType<GiphyContext>()
         ?.widget as GiphyContext;
 
     if (settings == null) {
