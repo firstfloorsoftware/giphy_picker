@@ -23,8 +23,12 @@ class GiphyPreviewPage extends StatelessWidget {
             child: Center(
                 child: GiphyImage.original(
               gif: gif,
-              width: media.orientation == Orientation.portrait ? double.maxFinite : null,
-              height: media.orientation == Orientation.landscape ? double.maxFinite : null,
+              width: media.orientation == Orientation.portrait
+                  ? double.maxFinite
+                  : null,
+              height: media.orientation == Orientation.landscape
+                  ? double.maxFinite
+                  : null,
               fit: BoxFit.contain,
             )),
             bottom: false));
