@@ -1,3 +1,8 @@
+## 1.0.2 - 2019-12-14
+* Fixes fullscreen gif preview
+* Improves error handling
+* Fixes use of deprecated APIs
+
 ## 1.0.1 - 2019-12-08
 * Fixes popping too many pages on gif selection
 
