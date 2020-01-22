@@ -1,15 +1,13 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
 .DS_Store
-.dart_tool/
-
-pubspec.lock
-
-.packages
-.pub/
-
-build/
-ios/.generated/
-ios/Flutter/Generated.xcconfig
-ios/Runner/GeneratedPluginRegistrant.*
+.atom/
+.buildlog/
+.history
+.svn/
 
 # IntelliJ related
 *.iml
@@ -17,8 +15,19 @@ ios/Runner/GeneratedPluginRegistrant.*
 *.iws
 .idea/
 
-# Visual Studio Code related
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
 .vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.packages
+.pub-cache/
+.pub/
+build/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -28,8 +37,6 @@ ios/Runner/GeneratedPluginRegistrant.*
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
-**/android/key.properties
-*.jks
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -54,6 +61,7 @@ ios/Runner/GeneratedPluginRegistrant.*
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
@@ -62,3 +70,4 @@ ios/Runner/GeneratedPluginRegistrant.*
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
