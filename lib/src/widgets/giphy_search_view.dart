@@ -38,11 +38,13 @@ class _GiphySearchViewState extends State<GiphySearchView> {
 
     return Column(children: <Widget>[
       Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: TextField(
-              controller: _textController,
-              decoration: InputDecoration(hintText: 'Search Giphy'),
-              onChanged: (value) => _delayedSearch(giphy, value))),
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: TextField(
+          controller: _textController,
+          decoration: InputDecoration(hintText: giphy.searchText),
+          onChanged: (value) => _delayedSearch(giphy, value),
+        ),
+      ),
       Expanded(
           child: StreamBuilder(
               stream: _repoController.stream,
