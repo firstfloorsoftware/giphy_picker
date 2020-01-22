@@ -25,11 +25,19 @@ class GiphyThumbnailGrid extends StatelessWidget {
               // display preview page
               final giphy = GiphyContext.of(context);
               final gif = await repo.get(index);
-              Navigator.push(
+              if (giphy.showPreviewPage) {
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => GiphyPreviewPage(
-                          gif: gif, onSelected: giphy.onSelected)));
+                    builder: (BuildContext context) => GiphyPreviewPage(
+                      gif: gif,
+                      onSelected: giphy.onSelected,
+                    ),
+                  ),
+                );
+              } else {
+                giphy.onSelected(gif);
+              }
             }),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount:

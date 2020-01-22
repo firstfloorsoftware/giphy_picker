@@ -9,16 +9,18 @@ class GiphyContext extends InheritedWidget {
   final String language;
   final ValueChanged<GiphyGif> onSelected;
   final ErrorListener onError;
+  final bool showPreviewPage;
 
-  const GiphyContext(
-      {Key key,
-      @required Widget child,
-      @required this.apiKey,
-      this.rating = GiphyRating.g,
-      this.language = GiphyLanguage.english,
-      this.onSelected,
-      this.onError})
-      : super(key: key, child: child);
+  const GiphyContext({
+    Key key,
+    @required Widget child,
+    @required this.apiKey,
+    this.rating = GiphyRating.g,
+    this.language = GiphyLanguage.english,
+    this.onSelected,
+    this.onError,
+    this.showPreviewPage = true,
+  }) : super(key: key, child: child);
 
   void select(GiphyGif gif) {
     if (onSelected != null) {
