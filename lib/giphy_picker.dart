@@ -21,6 +21,7 @@ class GiphyPicker {
     Widget title,
     ErrorListener onError,
     bool showPreviewPage = true,
+    String searchText = 'Search Giphy',
   }) async {
     GiphyGif result;
 
@@ -45,6 +46,7 @@ class GiphyPicker {
                     Navigator.pop(context);
                   },
                   showPreviewPage: showPreviewPage,
+                  searchText: searchText,
                 ),
             fullscreenDialog: true));
 
