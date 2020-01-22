@@ -13,30 +13,39 @@ typedef ErrorListener = void Function(dynamic error);
 /// Provides Giphy picker functionality.
 class GiphyPicker {
   /// Renders a full screen modal dialog for searching, and selecting a Giphy image.
-  static Future<GiphyGif> pickGif(
-      {@required BuildContext context,
-      @required String apiKey,
-      String rating = GiphyRating.g,
-      String lang = GiphyLanguage.english,
-      Widget title,
-      ErrorListener onError}) async {
+  static Future<GiphyGif> pickGif({
+    @required BuildContext context,
+    @required String apiKey,
+    String rating = GiphyRating.g,
+    String lang = GiphyLanguage.english,
+    Widget title,
+    ErrorListener onError,
+    bool showPreviewPage = true,
+  }) async {
     GiphyGif result;
 
     await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (BuildContext context) => GiphyContext(
-                child: GiphySearchPage(),
-                apiKey: apiKey,
-                rating: rating,
-                language: lang,
-                onError: onError ?? (error) => _showErrorDialog(context, error),
-                onSelected: (gif) {
-                  result = gif;
+                  child: GiphySearchPage(),
+                  apiKey: apiKey,
+                  rating: rating,
+                  language: lang,
+                  onError:
+                      onError ?? (error) => _showErrorDialog(context, error),
+                  onSelected: (gif) {
+                    result = gif;
 
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                }),
+                    // pop preview page if necessary
+                    if (showPreviewPage) {
+                      Navigator.pop(context);
+                    }
+                    // pop giphy_picker
+                    Navigator.pop(context);
+                  },
+                  showPreviewPage: showPreviewPage,
+                ),
             fullscreenDialog: true));
 
     return result;
