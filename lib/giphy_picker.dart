@@ -21,7 +21,7 @@ class GiphyPicker {
     Widget title,
     ErrorListener onError,
     bool showPreviewPage = true,
-    String searchText = 'Search Giphy',
+    String searchText = 'Search GIPHY',
   }) async {
     GiphyGif result;
 
