@@ -1,3 +1,7 @@
+## 1.0.4 - 2020-02-03
+* Default search text now GIPHY compliant
+* Removes unneeded assets
+
 ## 1.0.3 - 2020-01-22
 * Adds optional showPreviewPage
 * Adds searchtext localization
