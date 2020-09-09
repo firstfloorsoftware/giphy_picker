@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:giphy_picker/src/model/client/collection.dart';
 import 'package:giphy_picker/src/model/client/gif.dart';
 import 'package:giphy_picker/src/model/client/languages.dart';
 import 'package:giphy_picker/src/model/client/rating.dart';
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 
 class GiphyClient {
   static final baseUri = Uri(scheme: 'https', host: 'api.giphy.com');
