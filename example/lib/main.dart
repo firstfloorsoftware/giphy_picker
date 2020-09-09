@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () async {
               // request your Giphy API key at https://developers.giphy.com/
               final gif = await GiphyPicker.pickGif(
-                  context: context, apiKey: 'PilnYwrrV20iL4hAVAiz1khl769XFruz');
+                  context: context, apiKey: '[YOUR GIPHY APIKEY]');
 
               if (gif != null) {
                 setState(() => _gif = gif);
