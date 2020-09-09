@@ -1,3 +1,6 @@
+## 1.0.6 - 2020-09-09=
+* Removes obsolete giphy api key from documentation
+
 ## 1.0.5 - 2020-09-09
 * Adds Giphy sticker support
 * Removes giphy_client dependency
