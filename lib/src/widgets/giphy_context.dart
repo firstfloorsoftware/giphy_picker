@@ -7,6 +7,7 @@ class GiphyContext extends InheritedWidget {
   final String apiKey;
   final String rating;
   final String language;
+  final bool sticker;
   final ValueChanged<GiphyGif> onSelected;
   final ErrorListener onError;
   final bool showPreviewPage;
@@ -18,6 +19,7 @@ class GiphyContext extends InheritedWidget {
     @required this.apiKey,
     this.rating = GiphyRating.g,
     this.language = GiphyLanguage.english,
+    this.sticker = false,
     this.onSelected,
     this.onError,
     this.showPreviewPage = true,

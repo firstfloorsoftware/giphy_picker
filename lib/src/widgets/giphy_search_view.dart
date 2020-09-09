@@ -93,12 +93,14 @@ class _GiphySearchViewState extends State<GiphySearchView> {
           ? GiphyRepository.trending(
               apiKey: giphy.apiKey,
               rating: giphy.rating,
+              sticker: giphy.sticker,
               onError: giphy.onError)
           : GiphyRepository.search(
               apiKey: giphy.apiKey,
               query: term,
               rating: giphy.rating,
               lang: giphy.language,
+              sticker: giphy.sticker,
               onError: giphy.onError));
 
       // scroll up

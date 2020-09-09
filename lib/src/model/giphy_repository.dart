@@ -109,11 +109,12 @@ class GiphyRepository extends Repository<GiphyGif> {
   static Future<GiphyRepository> trending(
       {@required String apiKey,
       String rating = GiphyRating.g,
+      bool sticker = false,
       ErrorListener onError}) async {
     final repo = GiphyRepository(
         apiKey: apiKey,
-        getCollection: (client, offset, limit) =>
-            client.trending(offset: offset, limit: limit, rating: rating),
+        getCollection: (client, offset, limit) => client.trending(
+            offset: offset, limit: limit, rating: rating, sticker: sticker),
         onError: onError);
 
     // retrieve first page
@@ -128,11 +129,16 @@ class GiphyRepository extends Repository<GiphyGif> {
       @required String query,
       String rating = GiphyRating.g,
       String lang = GiphyLanguage.english,
+      bool sticker = false,
       ErrorListener onError}) async {
     final repo = GiphyRepository(
         apiKey: apiKey,
         getCollection: (client, offset, limit) => client.search(query,
-            offset: offset, limit: limit, rating: rating, lang: lang),
+            offset: offset,
+            limit: limit,
+            rating: rating,
+            lang: lang,
+            sticker: sticker),
         onError: onError);
 
     // retrieve first page

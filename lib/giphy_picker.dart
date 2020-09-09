@@ -18,6 +18,7 @@ class GiphyPicker {
     @required String apiKey,
     String rating = GiphyRating.g,
     String lang = GiphyLanguage.english,
+    bool sticker = false,
     Widget title,
     ErrorListener onError,
     bool showPreviewPage = true,
@@ -33,6 +34,7 @@ class GiphyPicker {
                   apiKey: apiKey,
                   rating: rating,
                   language: lang,
+                  sticker: sticker,
                   onError:
                       onError ?? (error) => _showErrorDialog(context, error),
                   onSelected: (gif) {
