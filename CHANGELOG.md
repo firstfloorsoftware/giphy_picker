@@ -1,3 +1,7 @@
+## 1.0.5 - 2020-09-09
+* Adds Giphy sticker support
+* Removes giphy_client dependency
+
 ## 1.0.4 - 2020-02-03
 * Default search text now GIPHY compliant
 * Removes unneeded assets
