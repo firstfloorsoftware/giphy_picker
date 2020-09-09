@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:giphy_client/giphy_client.dart';
 import 'package:giphy_picker/giphy_picker.dart';
 
 void main() => runApp(MyApp());
@@ -41,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () async {
               // request your Giphy API key at https://developers.giphy.com/
               final gif = await GiphyPicker.pickGif(
-                  context: context, apiKey: '[YOUR GIPHY APIKEY]');
+                  context: context, apiKey: 'PilnYwrrV20iL4hAVAiz1khl769XFruz');
 
               if (gif != null) {
                 setState(() => _gif = gif);

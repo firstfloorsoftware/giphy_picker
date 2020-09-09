@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giphy_client/giphy_client.dart';
+import 'package:giphy_picker/src/model/giphy_client.dart';
 import 'package:giphy_picker/src/widgets/giphy_image.dart';
 
 /// Presents a Giphy preview image.

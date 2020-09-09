@@ -67,15 +67,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  giphy_client:
-    dependency: transitive
-    description:
-      path: "."
-      ref: "5c31aaf761f210cb156d6d6b3e31865d6aedcca9"
-      resolved-ref: "5c31aaf761f210cb156d6d6b3e31865d6aedcca9"
-      url: "https://github.com/firstfloorsoftware/giphy_client.git"
-    source: git
-    version: "0.2.0"
   giphy_picker:
     dependency: "direct main"
     description:

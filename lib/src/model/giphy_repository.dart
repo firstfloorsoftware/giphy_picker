@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
-import 'package:giphy_client/giphy_client.dart';
+import 'package:giphy_picker/src/model/giphy_client.dart';
 import 'package:giphy_picker/src/model/repository.dart';
 import 'package:giphy_picker/giphy_picker.dart';
 import 'package:http/http.dart' as http;

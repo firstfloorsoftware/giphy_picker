@@ -2,10 +2,11 @@ library giphy_picker;
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:giphy_client/giphy_client.dart';
+import 'package:giphy_picker/src/model/giphy_client.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 
+export 'package:giphy_picker/src/model/giphy_client.dart';
 export 'package:giphy_picker/src/widgets/giphy_image.dart';
 
 typedef ErrorListener = void Function(dynamic error);
