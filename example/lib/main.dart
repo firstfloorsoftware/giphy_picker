@@ -27,24 +27,62 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(_gif?.title ?? 'Giphy Picker Demo'),
+      appBar: AppBar(
+        title: Text(_gif?.title ?? 'Giphy Picker Demo'),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: _gif == null ? Text('Pick a gif..') : GiphyImage.original(gif: _gif),
         ),
-        body: SafeArea(
-            child: Center(
-                child: _gif == null
-                    ? Text('Pick a gif..')
-                    : GiphyImage.original(gif: _gif))),
-        floatingActionButton: FloatingActionButton(
+      ),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            heroTag: 'fab_1',
+            backgroundColor: Colors.purpleAccent,
             child: Icon(Icons.search),
             onPressed: () async {
               // request your Giphy API key at https://developers.giphy.com/
-              final gif = await GiphyPicker.pickGif(
-                  context: context, apiKey: '[YOUR GIPHY APIKEY]');
+              final gif = await GiphyPicker.pickGif(context: context, apiKey: '[YOUR GIPHY APIKEY]');
 
               if (gif != null) {
                 setState(() => _gif = gif);
               }
-            }));
+            },
+          ),
+          const SizedBox(height: 20),
+          FloatingActionButton(
+            heroTag: 'fab_2',
+            backgroundColor: Colors.blueAccent,
+            child: Icon(Icons.search),
+            onPressed: () async {
+              // request your Giphy API key at https://developers.giphy.com/
+              final gif = await GiphyPicker.pickGif(
+                context: context,
+                apiKey: '[YOUR GIPHY APIKEY]',
+                fullScreenDialog: false,
+                decorator: GiphyDecorator(
+                  showAppBar: false,
+                  searchElevation: 4,
+                  giphyTheme: ThemeData.dark().copyWith(
+                    inputDecorationTheme: InputDecorationTheme(
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ),
+                ),
+              );
+
+              if (gif != null) {
+                setState(() => _gif = gif);
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
