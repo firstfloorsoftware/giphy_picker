@@ -29,9 +29,12 @@ class GiphyThumbnailGrid extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => GiphyPreviewPage(
-                      gif: gif,
-                      onSelected: giphy.onSelected,
+                    builder: (BuildContext context) => Theme(
+                      data: giphy.decorator.giphyTheme,
+                      child: GiphyPreviewPage(
+                        gif: gif,
+                        onSelected: giphy.onSelected,
+                      ),
                     ),
                   ),
                 );

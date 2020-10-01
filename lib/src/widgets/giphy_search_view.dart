@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_repository.dart';
+import 'package:giphy_picker/src/utils/debouncer.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
@@ -15,12 +16,15 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   final _textController = TextEditingController();
   final _scrollController = ScrollController();
   final _repoController = StreamController<GiphyRepository>();
+  Debouncer _debouncer;
 
   @override
   void initState() {
     // initiate search on next frame (we need context)
-    Future.delayed(Duration.zero, () {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final giphy = GiphyContext.of(context);
+      _debouncer =
+          Debouncer(giphy.searchDelay ?? const Duration(milliseconds: 500));
       _search(giphy);
     });
     super.initState();
@@ -35,14 +39,29 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   @override
   Widget build(BuildContext context) {
     final giphy = GiphyContext.of(context);
-
+    final giphyDecorator = giphy.decorator;
     return Column(children: <Widget>[
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: TextField(
-          controller: _textController,
-          decoration: InputDecoration(hintText: giphy.searchText),
-          onChanged: (value) => _delayedSearch(giphy, value),
+      Material(
+        elevation: giphyDecorator.searchElevation,
+        color: giphyDecorator.giphyTheme.scaffoldBackgroundColor,
+        child: Row(
+          children: [
+            if (!giphyDecorator.showAppBar) BackButton(),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: TextField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    hintText: giphy.searchText,
+                  ).applyDefaults(
+                    giphyDecorator.giphyTheme.inputDecorationTheme,
+                  ),
+                  onChanged: (value) => _delayedSearch(giphy, value),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       Expanded(
@@ -78,8 +97,8 @@ class _GiphySearchViewState extends State<GiphySearchView> {
     ]);
   }
 
-  void _delayedSearch(GiphyContext giphy, String term) => Future.delayed(
-      Duration(milliseconds: 500), () => _search(giphy, term: term));
+  void _delayedSearch(GiphyContext giphy, String term) =>
+      _debouncer.call(() => _search(giphy, term: term));
 
   Future _search(GiphyContext giphy, {String term = ''}) async {
     // skip search if term does not match current search text
@@ -107,9 +126,13 @@ class _GiphySearchViewState extends State<GiphySearchView> {
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(0);
       }
-      _repoController.add(repo);
+      if (mounted) {
+        _repoController.add(repo);
+      }
     } catch (error) {
-      _repoController.addError(error);
+      if (mounted) {
+        _repoController.addError(error);
+      }
       giphy.onError(error);
     }
   }
