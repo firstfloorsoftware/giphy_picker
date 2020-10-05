@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_repository.dart';
+import 'package:giphy_picker/src/utils/debouncer.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
@@ -15,12 +16,16 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   final _textController = TextEditingController();
   final _scrollController = ScrollController();
   final _repoController = StreamController<GiphyRepository>();
+  Debouncer _debouncer;
 
   @override
   void initState() {
     // initiate search on next frame (we need context)
-    Future.delayed(Duration.zero, () {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final giphy = GiphyContext.of(context);
+      _debouncer = Debouncer(
+        delay: giphy.searchDelay ?? const Duration(milliseconds: 500),
+      );
       _search(giphy);
     });
     super.initState();
@@ -29,6 +34,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   @override
   void dispose() {
     _repoController.close();
+    _debouncer?.cancel();
     super.dispose();
   }
 
@@ -94,7 +100,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   }
 
   void _delayedSearch(GiphyContext giphy, String term) =>
-      Future.delayed(giphy.searchDelay, () => _search(giphy, term: term));
+      _debouncer.call(() => _search(giphy, term: term));
 
   Future _search(GiphyContext giphy, {String term = ''}) async {
     // skip search if term does not match current search text
