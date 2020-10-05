@@ -71,11 +71,11 @@ class GiphyPicker {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text('Giphy error'),
-          content: new Text('An error occurred. $error'),
+          title: Text('Giphy error'),
+          content: Text('An error occurred. $error'),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text("Close"),
+            FlatButton(
+              child: Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
