@@ -1,3 +1,6 @@
+## 1.0.7 - 2020-10-06
+* Adds GiphyDecorator for improved picker customization (by diegoveloper)
+
 ## 1.0.6 - 2020-09-09
 * Removes obsolete giphy api key from documentation
 
