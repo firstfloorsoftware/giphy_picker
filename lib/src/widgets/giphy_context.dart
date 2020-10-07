@@ -14,6 +14,7 @@ class GiphyContext extends InheritedWidget {
   final bool showPreviewPage;
   final GiphyDecorator decorator;
   final String searchText;
+  final GiphyPreviewType previewType;
 
   /// Debounce delay when searching
   final Duration searchDelay;
@@ -31,6 +32,7 @@ class GiphyContext extends InheritedWidget {
     this.searchText = 'Search Giphy',
     this.searchDelay,
     this.decorator,
+    this.previewType,
   }) : super(key: key, child: child);
 
   void select(GiphyGif gif) {

@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
             context: context,
             apiKey: '[YOUR GIPHY APIKEY]',
             fullScreenDialog: false,
+            previewType: GiphyPreviewType.previewWebp,
             decorator: GiphyDecorator(
               showAppBar: false,
               searchElevation: 4,

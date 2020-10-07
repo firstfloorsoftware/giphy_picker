@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_client.dart';
 import 'package:giphy_picker/src/model/giphy_decorator.dart';
+import 'package:giphy_picker/src/model/giphy_preview_types.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 
@@ -12,6 +13,7 @@ import 'src/widgets/giphy_context.dart';
 export 'package:giphy_picker/src/model/giphy_client.dart';
 export 'package:giphy_picker/src/widgets/giphy_image.dart';
 export 'package:giphy_picker/src/model/giphy_decorator.dart';
+export 'package:giphy_picker/src/model/giphy_preview_types.dart';
 
 typedef ErrorListener = void Function(dynamic error);
 
@@ -30,6 +32,7 @@ class GiphyPicker {
     GiphyDecorator decorator,
     bool fullScreenDialog = true,
     String searchText = 'Search GIPHY',
+    GiphyPreviewType previewType,
   }) async {
     GiphyGif result;
     final _decorator =
@@ -39,6 +42,7 @@ class GiphyPicker {
       MaterialPageRoute(
         builder: (BuildContext context) => GiphyContext(
           decorator: _decorator,
+          previewType: previewType ?? GiphyPreviewType.previewGif,
           child: GiphySearchPage(
             title: title,
           ),
