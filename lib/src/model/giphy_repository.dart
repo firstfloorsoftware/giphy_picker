@@ -124,8 +124,9 @@ class GiphyRepository extends Repository<GiphyGif> {
     }
     if (url == null) {
       url = gif.images.previewGif.url ??
-          gif.images.fixedWidthSmallStill.url ??
-          gif.images.fixedHeightDownsampled.url;
+          gif.images.fixedWidthSmallStill?.url ??
+          gif.images.fixedHeightDownsampled?.url ??
+          gif.images.original.url;
     }
 
     if (url != null) {
