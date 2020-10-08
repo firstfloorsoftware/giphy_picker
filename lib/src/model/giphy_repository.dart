@@ -101,29 +101,31 @@ class GiphyRepository extends Repository<GiphyGif> {
     String url;
     switch (previewType) {
       case GiphyPreviewType.fixedWidthSmallStill:
-        url = gif.images.fixedWidthSmallStill.url;
+        url = gif.images.fixedWidthSmallStill?.url;
         break;
       case GiphyPreviewType.previewGif:
-        url = gif.images.previewGif.url;
+        url = gif.images.previewGif?.url;
         break;
       case GiphyPreviewType.fixedHeight:
-        url = gif.images.fixedHeight.url;
+        url = gif.images.fixedHeight?.url;
         break;
       case GiphyPreviewType.original:
         url = gif.images.original.url;
         break;
       case GiphyPreviewType.previewWebp:
-        url = gif.images.previewWebp.url;
+        url = gif.images.previewWebp?.url;
         break;
       case GiphyPreviewType.downsizedLarge:
-        url = gif.images.downsizedLarge.url;
+        url = gif.images.downsizedLarge?.url;
         break;
       case GiphyPreviewType.originalStill:
-        url = gif.images.originalStill.url;
+        url = gif.images.originalStill?.url;
         break;
     }
     if (url == null) {
-      url = gif.images.previewGif.url ?? gif.images.fixedWidthSmallStill.url;
+      url = gif.images.previewGif.url ??
+          gif.images.fixedWidthSmallStill.url ??
+          gif.images.fixedHeightDownsampled.url;
     }
 
     if (url != null) {
