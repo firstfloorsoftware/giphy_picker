@@ -1,3 +1,7 @@
+## 1.0.8 - 2020-10-11
+* Adds giphy preview type (by diegoveloper)
+* Improved preview image fallback selection (by diegoveloper)
+
 ## 1.0.7 - 2020-10-06
 * Adds GiphyDecorator for improved picker customization (by diegoveloper)
 
