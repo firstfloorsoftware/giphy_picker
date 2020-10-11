@@ -115,6 +115,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
               apiKey: giphy.apiKey,
               rating: giphy.rating,
               sticker: giphy.sticker,
+              previewType: giphy.previewType,
               onError: giphy.onError)
           : GiphyRepository.search(
               apiKey: giphy.apiKey,
@@ -122,7 +123,9 @@ class _GiphySearchViewState extends State<GiphySearchView> {
               rating: giphy.rating,
               lang: giphy.language,
               sticker: giphy.sticker,
-              onError: giphy.onError));
+              previewType: giphy.previewType,
+              onError: giphy.onError,
+            ));
 
       // scroll up
       if (_scrollController.hasClients) {
