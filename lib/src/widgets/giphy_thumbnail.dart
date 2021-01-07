@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_repository.dart';
 
@@ -7,10 +6,10 @@ import 'package:giphy_picker/src/model/giphy_repository.dart';
 class GiphyThumbnail extends StatefulWidget {
   final GiphyRepository repo;
   final int index;
-  final Widget placeholder;
+  final Widget? placeholder;
 
   const GiphyThumbnail(
-      {Key key, @required this.repo, @required this.index, this.placeholder})
+      {Key? key, required this.repo, required this.index, this.placeholder})
       : super(key: key);
 
   @override
@@ -18,7 +17,7 @@ class GiphyThumbnail extends StatefulWidget {
 }
 
 class _GiphyThumbnailState extends State<GiphyThumbnail> {
-  Future<Uint8List> _loadPreview;
+  late Future<Uint8List> _loadPreview;
 
   @override
   void initState() {
@@ -39,6 +38,6 @@ class _GiphyThumbnailState extends State<GiphyThumbnail> {
         if (!snapshot.hasData) {
           return widget.placeholder ?? Container(color: Colors.grey.shade200);
         }
-        return Image.memory(snapshot.data, fit: BoxFit.cover);
+        return Image.memory(snapshot.data!, fit: BoxFit.cover);
       });
 }

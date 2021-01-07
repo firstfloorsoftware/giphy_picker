@@ -8,8 +8,6 @@ import 'package:giphy_picker/src/model/giphy_preview_types.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 
-import 'src/widgets/giphy_context.dart';
-
 export 'package:giphy_picker/src/model/giphy_client.dart';
 export 'package:giphy_picker/src/widgets/giphy_image.dart';
 export 'package:giphy_picker/src/model/giphy_decorator.dart';
@@ -20,23 +18,22 @@ typedef ErrorListener = void Function(dynamic error);
 /// Provides Giphy picker functionality.
 class GiphyPicker {
   /// Renders a full screen modal dialog for searching, and selecting a Giphy image.
-  static Future<GiphyGif> pickGif({
-    @required BuildContext context,
-    @required String apiKey,
+  static Future<GiphyGif?> pickGif({
+    required BuildContext context,
+    required String apiKey,
     String rating = GiphyRating.g,
     String lang = GiphyLanguage.english,
     bool sticker = false,
-    Widget title,
-    ErrorListener onError,
+    Widget? title,
+    ErrorListener? onError,
     bool showPreviewPage = true,
-    GiphyDecorator decorator,
+    GiphyDecorator? decorator,
     bool fullScreenDialog = true,
     String searchText = 'Search GIPHY',
-    GiphyPreviewType previewType,
+    GiphyPreviewType? previewType,
   }) async {
-    GiphyGif result;
-    final _decorator =
-        decorator ?? GiphyDecorator(giphyTheme: Theme.of(context));
+    GiphyGif? result;
+    final _decorator = decorator ?? GiphyDecorator();
     await Navigator.push(
       context,
       MaterialPageRoute(

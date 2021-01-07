@@ -1,22 +1,22 @@
 class GiphyUser {
-  final String avatarUrl;
-  final String bannerUrl;
-  final String profileUrl;
-  final String username;
-  final String displayName;
-  final String twitter;
-  final String guid;
-  final String metadataDescription;
-  final String attributionDisplayName;
-  final String name;
-  final String description;
-  final String facebookUrl;
-  final String twitterUrl;
-  final String instagramUrl;
-  final String tumblrUrl;
-  final bool suppressChrome;
-  final String websiteUrl;
-  final String websiteDisplayUrl;
+  final String? avatarUrl;
+  final String? bannerUrl;
+  final String? profileUrl;
+  final String? username;
+  final String? displayName;
+  final String? twitter;
+  final String? guid;
+  final String? metadataDescription;
+  final String? attributionDisplayName;
+  final String? name;
+  final String? description;
+  final String? facebookUrl;
+  final String? twitterUrl;
+  final String? instagramUrl;
+  final String? tumblrUrl;
+  final bool? suppressChrome;
+  final String? websiteUrl;
+  final String? websiteDisplayUrl;
 
   GiphyUser({
     this.avatarUrl,

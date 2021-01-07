@@ -22,7 +22,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  GiphyGif _gif;
+  GiphyGif? _gif;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SafeArea(
         child: Center(
-          child: _gif == null ? Text('Pick a gif..') : GiphyImage.original(gif: _gif),
+          child: _gif == null
+              ? Text('Pick a gif..')
+              : GiphyImage.original(gif: _gif!),
         ),
       ),
       floatingActionButton: FloatingActionButton(

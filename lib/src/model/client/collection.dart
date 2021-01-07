@@ -48,7 +48,7 @@ class GiphyPagination {
   final int count;
   final int offset;
 
-  GiphyPagination({this.totalCount, this.count, this.offset});
+  GiphyPagination({this.totalCount = 0, this.count = 0, this.offset = 0});
 
   factory GiphyPagination.fromJson(Map<String, dynamic> json) =>
       GiphyPagination(

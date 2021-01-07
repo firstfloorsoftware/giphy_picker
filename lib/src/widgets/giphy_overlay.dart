@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 /// Renders a 'Powered by GIPHY' overlay image over its content
 class GiphyOverlay extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
   const GiphyOverlay({this.child});
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
-      child,
+      if (child != null) child!,
       Positioned(
           left: 0,
           right: 0,
