@@ -13,7 +13,7 @@ typedef Future<GiphyCollection> GetCollection(
 /// Retrieves and caches gif collections from Giphy.
 class GiphyRepository extends Repository<GiphyGif> {
   final _client = http.Client();
-  final _previewCompleters = HashMap<int, Completer<Uint8List>>();
+  final _previewCompleters = HashMap<int, Completer<Uint8List?>>();
   final _previewQueue = Queue<int>();
   final GetCollection getCollection;
   final int maxConcurrentPreviewLoad;
@@ -40,10 +40,10 @@ class GiphyRepository extends Repository<GiphyGif> {
   }
 
   /// Retrieves a preview Gif image at specified index.
-  Future<Uint8List> getPreview(int index) async {
+  Future<Uint8List?> getPreview(int index) async {
     var completer = _previewCompleters[index];
     if (completer == null) {
-      completer = Completer<Uint8List>();
+      completer = Completer<Uint8List?>();
       _previewCompleters[index] = completer;
       _previewQueue.add(index);
 
