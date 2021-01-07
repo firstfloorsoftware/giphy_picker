@@ -17,7 +17,7 @@ class GiphyThumbnail extends StatefulWidget {
 }
 
 class _GiphyThumbnailState extends State<GiphyThumbnail> {
-  late Future<Uint8List> _loadPreview;
+  late Future<Uint8List?> _loadPreview;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _GiphyThumbnailState extends State<GiphyThumbnail> {
   @override
   Widget build(BuildContext context) => FutureBuilder(
       future: _loadPreview,
-      builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
         if (!snapshot.hasData) {
           return widget.placeholder ?? Container(color: Colors.grey.shade200);
         }
