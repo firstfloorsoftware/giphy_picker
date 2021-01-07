@@ -36,7 +36,7 @@ class GiphyRepository extends Repository<GiphyGif> {
   Future<Page<GiphyGif>> getPage(int page) async {
     final offset = page * pageSize;
     final collection = await getCollection(_giphyClient, offset, pageSize);
-    return Page(collection.data, page, collection.pagination.totalCount);
+    return Page(collection.data, page, collection.pagination?.totalCount ?? 0);
   }
 
   /// Retrieves a preview Gif image at specified index.
