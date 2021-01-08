@@ -1,3 +1,6 @@
+## 2.0.0-nullsafety.0 - 2021-01-08
+* Migrates to null safety
+
 ## 1.0.8 - 2020-10-11
 * Adds giphy preview type (by diegoveloper)
 * Improved preview image fallback selection (by diegoveloper)
