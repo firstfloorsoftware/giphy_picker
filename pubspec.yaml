@@ -9,9 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: 
-    # temporarily using git dependency, http null safety is not ready yet
-    git: https://github.com/dart-lang/http
+  http: 0.13.0-nullsafety.0
 
 dev_dependencies:
   flutter_test:

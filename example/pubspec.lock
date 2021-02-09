@@ -77,11 +77,9 @@ packages:
   http:
     dependency: transitive
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: d473635f0dbb72936664696162127c2209986356
-      url: "https://github.com/dart-lang/http"
-    source: git
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.13.0-nullsafety.0"
   http_parser:
     dependency: transitive
