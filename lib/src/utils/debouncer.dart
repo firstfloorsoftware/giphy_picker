@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart';
 
 /// Debouncer created to wait some time before executing an action
 class Debouncer {
+  final Duration _delay;
+  Timer? _timer;
+
   Debouncer({
     Duration delay = const Duration(milliseconds: 500),
   }) : _delay = delay;
-
-  final Duration _delay;
-  Timer _timer;
 
   void call(VoidCallback action) {
     _timer?.cancel();

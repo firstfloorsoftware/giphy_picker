@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:giphy_picker/src/model/client/collection.dart';
 import 'package:giphy_picker/src/model/client/gif.dart';
 import 'package:giphy_picker/src/model/client/languages.dart';
@@ -15,8 +13,8 @@ class GiphyClient {
   final Client _client;
 
   GiphyClient({
-    @required String apiKey,
-    Client client,
+    required String apiKey,
+    Client? client,
   })  : _apiKey = apiKey,
         _client = client ?? Client();
 
@@ -61,7 +59,7 @@ class GiphyClient {
   }
 
   Future<GiphyGif> random({
-    String tag,
+    String? tag,
     String rating = GiphyRating.g,
     bool sticker = false,
   }) async {
@@ -69,7 +67,7 @@ class GiphyClient {
       baseUri.replace(
         path: sticker ? 'v1/stickers/random' : 'v1/gifs/random',
         queryParameters: <String, String>{
-          'tag': tag,
+          if (tag != null) 'tag': tag,
           'rating': rating,
         },
       ),
@@ -94,14 +92,13 @@ class GiphyClient {
   }
 
   Future<Response> _getWithAuthorization(Uri uri) async {
-    final response = await _client.get(
-      uri
-          .replace(
-            queryParameters: Map<String, String>.from(uri.queryParameters)
-              ..putIfAbsent('api_key', () => _apiKey),
-          )
-          .toString(),
-    );
+    final uriString = uri
+        .replace(
+          queryParameters: Map<String, String>.from(uri.queryParameters)
+            ..putIfAbsent('api_key', () => _apiKey),
+        )
+        .toString();
+    final response = await _client.get(Uri.parse(uriString));
 
     if (response.statusCode == 200) {
       return response;

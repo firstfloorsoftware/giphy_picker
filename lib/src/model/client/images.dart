@@ -1,30 +1,30 @@
 import 'package:giphy_picker/src/model/client/image.dart';
 
 class GiphyImages {
-  final GiphyStillImage fixedHeightStill;
-  final GiphyStillImage originalStill;
-  final GiphyFullImage fixedWidth;
-  final GiphyStillImage fixedHeightSmallStill;
-  final GiphyDownsampledImage fixedHeightDownsampled;
-  final GiphyPreviewImage preview;
-  final GiphyFullImage fixedHeightSmall;
-  final GiphyStillImage downsizedStill;
-  final GiphyDownsizedImage downsized;
-  final GiphyDownsizedImage downsizedLarge;
-  final GiphyStillImage fixedWidthSmallStill;
-  final GiphyWebPImage previewWebp;
-  final GiphyStillImage fixedWidthStill;
-  final GiphyFullImage fixedWidthSmall;
-  final GiphyPreviewImage downsizedSmall;
-  final GiphyDownsampledImage fixedWidthDownsampled;
-  final GiphyPreviewImage downsizedMedium;
-  final GiphyOriginalImage original;
-  final GiphyFullImage fixedHeight;
-  final GiphyPreviewImage hd;
-  final GiphyLoopingImage looping;
-  final GiphyPreviewImage originalMp4;
-  final GiphyDownsizedImage previewGif;
-  final GiphyStillImage w480Still;
+  final GiphyStillImage? fixedHeightStill;
+  final GiphyStillImage? originalStill;
+  final GiphyFullImage? fixedWidth;
+  final GiphyStillImage? fixedHeightSmallStill;
+  final GiphyDownsampledImage? fixedHeightDownsampled;
+  final GiphyPreviewImage? preview;
+  final GiphyFullImage? fixedHeightSmall;
+  final GiphyStillImage? downsizedStill;
+  final GiphyDownsizedImage? downsized;
+  final GiphyDownsizedImage? downsizedLarge;
+  final GiphyStillImage? fixedWidthSmallStill;
+  final GiphyWebPImage? previewWebp;
+  final GiphyStillImage? fixedWidthStill;
+  final GiphyFullImage? fixedWidthSmall;
+  final GiphyPreviewImage? downsizedSmall;
+  final GiphyDownsampledImage? fixedWidthDownsampled;
+  final GiphyPreviewImage? downsizedMedium;
+  final GiphyOriginalImage? original;
+  final GiphyFullImage? fixedHeight;
+  final GiphyPreviewImage? hd;
+  final GiphyLoopingImage? looping;
+  final GiphyPreviewImage? originalMp4;
+  final GiphyDownsizedImage? previewGif;
+  final GiphyStillImage? w480Still;
 
   GiphyImages({
     this.fixedHeightStill,

@@ -9,13 +9,10 @@ abstract class Repository<T> {
   final Set<int> _pagesLoading = Set<int>();
   final HashMap<int, Completer<T>> _completers = HashMap<int, Completer<T>>();
   final int pageSize;
-  final ErrorListener onError;
-  int _totalCount;
+  final ErrorListener? onError;
+  int _totalCount = 0;
 
-  Repository({this.pageSize, this.onError}) {
-    assert(pageSize != null);
-    assert(onError != null);
-  }
+  Repository({required this.pageSize, this.onError});
 
   /// The total number of values available.
   int get totalCount => _totalCount;
@@ -23,10 +20,8 @@ abstract class Repository<T> {
   /// Asynchronously retrieves the value at specified index. When not available in local cache
   /// the page containing the value is retrieved.
   Future<T> get(int index) {
-    assert(index != null);
-    // index must within bounds, or 0 if totalCount is null
-    assert(
-        _totalCount == null && index == 0 || index >= 0 && index < _totalCount);
+    // index must within bounds
+    assert(index == 0 || index > 0 && index < _totalCount);
 
     final value = _cache[index];
 
@@ -86,6 +81,9 @@ abstract class Repository<T> {
       final completer = _completers.remove(index);
       completer?.completeError(error, stackTrace);
     }
+
+    // use custom error handler if available
+    onError?.call(error);
   }
 
   Future<Page<T>> getPage(int page);

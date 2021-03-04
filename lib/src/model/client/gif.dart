@@ -2,64 +2,65 @@ import 'package:giphy_picker/src/model/client/images.dart';
 import 'package:giphy_picker/src/model/client/user.dart';
 
 class GiphyGif {
-  final String title;
-  final String type;
+  final String? title;
+  final String? type;
   final String id;
-  final String slug;
-  final String url;
-  final String bitlyGifUrl;
-  final String bitlyUrl;
-  final String embedUrl;
-  final String username;
-  final String source;
-  final String rating;
-  final String contentUrl;
-  final String sourceTld;
-  final String sourcePostUrl;
-  final int isSticker;
-  final DateTime importDatetime;
-  final DateTime trendingDatetime;
+  final String? slug;
+  final String? url;
+  final String? bitlyGifUrl;
+  final String? bitlyUrl;
+  final String? embedUrl;
+  final String? username;
+  final String? source;
+  final String? rating;
+  final String? contentUrl;
+  final String? sourceTld;
+  final String? sourcePostUrl;
+  final int? isSticker;
+  final DateTime? importDatetime;
+  final DateTime? trendingDatetime;
   final GiphyUser user;
   final GiphyImages images;
 
-  GiphyGif({
-    this.title,
-    this.type,
-    this.id,
-    this.slug,
-    this.url,
-    this.bitlyGifUrl,
-    this.bitlyUrl,
-    this.embedUrl,
-    this.username,
-    this.source,
-    this.rating,
-    this.contentUrl,
-    this.sourceTld,
-    this.sourcePostUrl,
-    this.isSticker,
-    this.importDatetime,
-    this.trendingDatetime,
-    this.user,
-    this.images,
-  });
+  GiphyGif(
+      {this.title,
+      this.type,
+      required this.id,
+      this.slug,
+      this.url,
+      this.bitlyGifUrl,
+      this.bitlyUrl,
+      this.embedUrl,
+      this.username,
+      this.source,
+      this.rating,
+      this.contentUrl,
+      this.sourceTld,
+      this.sourcePostUrl,
+      this.isSticker,
+      this.importDatetime,
+      this.trendingDatetime,
+      GiphyUser? user,
+      GiphyImages? images})
+      : this.user = user ?? GiphyUser(),
+        this.images = images ?? GiphyImages();
 
   factory GiphyGif.fromJson(Map<String, dynamic> json) => GiphyGif(
-      title: json['title'] as String,
-      type: json['type'] as String,
-      id: json['id'] as String,
-      slug: json['slug'] as String,
-      url: json['url'] as String,
-      bitlyGifUrl: json['bitly_gif_url'] as String,
-      bitlyUrl: json['bitly_url'] as String,
-      embedUrl: json['embed_url'] as String,
-      username: json['username'] as String,
-      source: json['source'] as String,
-      rating: json['rating'] as String,
-      contentUrl: json['content_url'] as String,
-      sourceTld: json['source_tld'] as String,
-      sourcePostUrl: json['source_post_url'] as String,
-      isSticker: json['is_sticker'] as int,
+      title: json['title'] as String?,
+      type: json['type'] as String?,
+      id: json['id'] as String? ?? '',
+      slug: json['slug'] as String?,
+      url: json['url'] as String?,
+      bitlyGifUrl: json['bitly_gif_url'] as String?,
+      bitlyUrl: json['bitly_url'] as String?,
+      embedUrl: json['embed_url'] as String?,
+      username: json['username'] as String?,
+      source: json['source'] as String?,
+      rating: json['rating'] as String?,
+      contentUrl: json['content_url'] as String?,
+      sourceTld: json['source_tld'] as String?,
+      sourcePostUrl: json['source_post_url'] as String?,
+      isSticker: json['is_sticker'] as int?,
       importDatetime: json['import_datetime'] == null
           ? null
           : DateTime.parse(json['import_datetime'] as String),

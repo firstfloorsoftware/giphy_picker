@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_repository.dart';
 import 'package:giphy_picker/src/utils/debouncer.dart';
@@ -16,15 +15,15 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   final _textController = TextEditingController();
   final _scrollController = ScrollController();
   final _repoController = StreamController<GiphyRepository>();
-  Debouncer _debouncer;
+  late Debouncer _debouncer;
 
   @override
   void initState() {
     // initiate search on next frame (we need context)
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       final giphy = GiphyContext.of(context);
       _debouncer = Debouncer(
-        delay: giphy.searchDelay ?? const Duration(milliseconds: 500),
+        delay: giphy.searchDelay,
       );
       _search(giphy);
     });
@@ -34,7 +33,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   @override
   void dispose() {
     _repoController.close();
-    _debouncer?.cancel();
+    _debouncer.cancel();
     super.dispose();
   }
 
@@ -42,10 +41,19 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   Widget build(BuildContext context) {
     final giphy = GiphyContext.of(context);
     final giphyDecorator = giphy.decorator;
+
+    final inputDecoration = InputDecoration(
+      hintText: giphy.searchText,
+    );
+    if (giphyDecorator.giphyTheme != null) {
+      inputDecoration
+          .applyDefaults(giphyDecorator.giphyTheme!.inputDecorationTheme);
+    }
+
     return Column(children: <Widget>[
       Material(
         elevation: giphyDecorator.searchElevation,
-        color: giphyDecorator.giphyTheme.scaffoldBackgroundColor,
+        color: giphyDecorator.giphyTheme?.scaffoldBackgroundColor,
         child: Row(
           children: [
             if (!giphyDecorator.showAppBar) BackButton(),
@@ -54,11 +62,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: TextField(
                   controller: _textController,
-                  decoration: InputDecoration(
-                    hintText: giphy.searchText,
-                  ).applyDefaults(
-                    giphyDecorator.giphyTheme.inputDecorationTheme,
-                  ),
+                  decoration: inputDecoration,
                   onChanged: (value) => _delayedSearch(giphy, value),
                 ),
               ),
@@ -72,12 +76,12 @@ class _GiphySearchViewState extends State<GiphySearchView> {
               builder: (BuildContext context,
                   AsyncSnapshot<GiphyRepository> snapshot) {
                 if (snapshot.hasData) {
-                  return snapshot.data.totalCount > 0
+                  return snapshot.data!.totalCount > 0
                       ? NotificationListener(
                           child: RefreshIndicator(
                               child: GiphyThumbnailGrid(
                                   key: Key('${snapshot.data.hashCode}'),
-                                  repo: snapshot.data,
+                                  repo: snapshot.data!,
                                   scrollController: _scrollController),
                               onRefresh: () =>
                                   _search(giphy, term: _textController.text)),
@@ -138,7 +142,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
       if (mounted) {
         _repoController.addError(error);
       }
-      giphy.onError(error);
+      giphy.onError?.call(error);
     }
   }
 }

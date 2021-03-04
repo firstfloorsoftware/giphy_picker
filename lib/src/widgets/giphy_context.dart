@@ -9,20 +9,20 @@ class GiphyContext extends InheritedWidget {
   final String rating;
   final String language;
   final bool sticker;
-  final ValueChanged<GiphyGif> onSelected;
-  final ErrorListener onError;
+  final ValueChanged<GiphyGif>? onSelected;
+  final ErrorListener? onError;
   final bool showPreviewPage;
   final GiphyDecorator decorator;
   final String searchText;
-  final GiphyPreviewType previewType;
+  final GiphyPreviewType? previewType;
 
   /// Debounce delay when searching
   final Duration searchDelay;
 
   const GiphyContext({
-    Key key,
-    @required Widget child,
-    @required this.apiKey,
+    Key? key,
+    required Widget child,
+    required this.apiKey,
     this.rating = GiphyRating.g,
     this.language = GiphyLanguage.english,
     this.sticker = false,
@@ -30,22 +30,13 @@ class GiphyContext extends InheritedWidget {
     this.onError,
     this.showPreviewPage = true,
     this.searchText = 'Search Giphy',
-    this.searchDelay,
-    this.decorator,
+    this.searchDelay = const Duration(milliseconds: 500),
+    required this.decorator,
     this.previewType,
   }) : super(key: key, child: child);
 
-  void select(GiphyGif gif) {
-    if (onSelected != null) {
-      onSelected(gif);
-    }
-  }
-
-  void error(dynamic error) {
-    if (onError != null) {
-      onError(error);
-    }
-  }
+  void select(GiphyGif gif) => onSelected?.call(gif);
+  void error(dynamic error) => onError?.call(error);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => false;
@@ -53,7 +44,7 @@ class GiphyContext extends InheritedWidget {
   static GiphyContext of(BuildContext context) {
     final settings = context
         .getElementForInheritedWidgetOfExactType<GiphyContext>()
-        ?.widget as GiphyContext;
+        ?.widget as GiphyContext?;
 
     if (settings == null) {
       throw 'Required GiphyContext widget not found. Make sure to wrap your widget with GiphyContext.';
