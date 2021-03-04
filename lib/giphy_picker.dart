@@ -75,7 +75,7 @@ class GiphyPicker {
           title: Text('Giphy error'),
           content: Text('An error occurred. $error'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
