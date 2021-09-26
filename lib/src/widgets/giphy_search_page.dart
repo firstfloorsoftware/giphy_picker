@@ -10,14 +10,16 @@ class GiphySearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      final giphyDecorator = GiphyContext.of(context).decorator;
+      final giphy = GiphyContext.of(context);
+      final giphyDecorator = giphy.decorator;
+      final showAttributionMark = giphy.showAttributionMark;
       return Theme(
         data: giphyDecorator.giphyTheme ?? Theme.of(context),
         child: Scaffold(
           appBar: giphyDecorator.showAppBar ? AppBar(title: title) : null,
           body: SafeArea(
             child: GiphySearchView(),
-            bottom: false,
+            bottom: showAttributionMark,
           ),
         ),
       );

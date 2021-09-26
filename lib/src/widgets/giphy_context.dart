@@ -9,6 +9,8 @@ class GiphyContext extends InheritedWidget {
   final String rating;
   final String language;
   final bool sticker;
+  final bool showAttributionMark;
+  final bool attributionMarkDarkMode;
   final ValueChanged<GiphyGif>? onSelected;
   final ErrorListener? onError;
   final bool showPreviewPage;
@@ -26,6 +28,8 @@ class GiphyContext extends InheritedWidget {
     this.rating = GiphyRating.g,
     this.language = GiphyLanguage.english,
     this.sticker = false,
+    this.showAttributionMark = false,
+    this.attributionMarkDarkMode = false,
     this.onSelected,
     this.onError,
     this.showPreviewPage = true,

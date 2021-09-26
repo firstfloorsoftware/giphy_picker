@@ -18,3 +18,4 @@ dev_dependencies:
 flutter:
   assets:
     - assets/PoweredBy_200px-Black_HorizText.png
+    - assets/PoweredBy_200px-White_HorizText.png

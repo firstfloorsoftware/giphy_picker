@@ -24,6 +24,8 @@ class GiphyPicker {
     String rating = GiphyRating.g,
     String lang = GiphyLanguage.english,
     bool sticker = false,
+    this.showAttributionMark = false,
+    this.attributionMarkDarkMode = false,
     Widget? title,
     ErrorListener? onError,
     bool showPreviewPage = true,
@@ -39,6 +41,8 @@ class GiphyPicker {
       MaterialPageRoute(
         builder: (BuildContext context) => GiphyContext(
           decorator: _decorator,
+          showAttributionMark: showAttributionMark,
+          attributionMarkDarkMode: attributionMarkDarkMode,
           previewType: previewType ?? GiphyPreviewType.previewGif,
           child: GiphySearchPage(
             title: title,

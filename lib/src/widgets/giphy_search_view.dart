@@ -99,7 +99,22 @@ class _GiphySearchViewState extends State<GiphySearchView> {
                   return Center(child: Text('An error occurred'));
                 }
                 return Center(child: CircularProgressIndicator());
-              }))
+              })),
+      if(giphy.showAttributionMark)        
+      Material(
+        elevation: 0,
+        color: giphyDecorator.giphyTheme?.scaffoldBackgroundColor,
+        child: 
+            Center(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Image.asset(
+                  giphy.attributionMarkDarkMode
+                  ?'assets/PoweredBy_200px-Black_HorizText.png'
+                  :'assets/PoweredBy_200px-White_HorizText.png',
+                      package: 'giphy_picker',)
+              ),
+        ),)        
     ]);
   }
 
