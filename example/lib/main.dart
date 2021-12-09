@@ -30,12 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(_gif?.title ?? 'Giphy Picker Demo'),
       ),
-      body: SafeArea(
-        child: Center(
-          child: _gif == null
-              ? Text('Pick a gif..')
-              : GiphyImage.original(gif: _gif!),
-        ),
+      body: GiphyTrendingWidget(
+        apiKey: 'hnRqXsc7kknwSgJHVAzhDvG01kG9mpZH',
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
@@ -44,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // request your Giphy API key at https://developers.giphy.com/
           final gif = await GiphyPicker.pickGif(
             context: context,
-            apiKey: '[YOUR GIPHY APIKEY]',
+            apiKey: 'hnRqXsc7kknwSgJHVAzhDvG01kG9mpZH',
             fullScreenDialog: false,
             previewType: GiphyPreviewType.previewWebp,
             decorator: GiphyDecorator(
