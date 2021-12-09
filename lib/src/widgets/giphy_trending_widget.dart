@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_repository.dart';
-import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
 import '../../giphy_picker.dart';
+import 'giphy_thumbnail.dart';
 
 /// Provides the UI for searching Giphy gif images.
 class GiphyTrendingWidget extends StatefulWidget {
   const GiphyTrendingWidget({
     Key? key,
     required this.apiKey,
+    required this.onSelectedGif,
     this.loadingWidget,
     this.noResultWidget,
     this.errorWidget,
@@ -26,6 +27,9 @@ class GiphyTrendingWidget extends StatefulWidget {
 
   /// for error widget
   final Widget? errorWidget;
+
+  /// function for selecting gif
+  final Function(GiphyGif) onSelectedGif;
 
   @override
   _GiphyTrendingWidgetState createState() => _GiphyTrendingWidgetState();
@@ -59,10 +63,11 @@ class _GiphyTrendingWidgetState extends State<GiphyTrendingWidget> {
           return snapshot.data!.totalCount > 0
               ? NotificationListener(
                   child: RefreshIndicator(
-                    child: GiphyThumbnailGrid(
+                    child: _GiphyThumbnailGrid(
                       key: Key('${snapshot.data.hashCode}'),
                       repo: snapshot.data!,
                       scrollController: _scrollController,
+                      selectedGif: widget.onSelectedGif,
                     ),
                     onRefresh: _search,
                   ),
@@ -113,5 +118,41 @@ class _GiphyTrendingWidgetState extends State<GiphyTrendingWidget> {
         _repoController.addError(error);
       }
     }
+  }
+}
+
+/// A selectable grid view of gif thumbnails.
+class _GiphyThumbnailGrid extends StatelessWidget {
+  final GiphyRepository repo;
+  final ScrollController? scrollController;
+  final Function(GiphyGif) selectedGif;
+
+  const _GiphyThumbnailGrid({
+    Key? key,
+    required this.repo,
+    required this.selectedGif,
+    this.scrollController,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: EdgeInsets.all(10),
+      controller: scrollController,
+      itemCount: repo.totalCount,
+      itemBuilder: (BuildContext context, int index) => GestureDetector(
+        child: GiphyThumbnail(key: Key('$index'), repo: repo, index: index),
+        onTap: () async {
+          final gif = await repo.get(index);
+          selectedGif(gif);
+        },
+      ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 3,
+        childAspectRatio: 1.6,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
+      ),
+    );
   }
 }

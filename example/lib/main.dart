@@ -32,6 +32,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: GiphyTrendingWidget(
         apiKey: 'hnRqXsc7kknwSgJHVAzhDvG01kG9mpZH',
+        onSelectedGif: (val) {
+          print(val);
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
