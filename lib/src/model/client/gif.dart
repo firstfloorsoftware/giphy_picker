@@ -67,9 +67,7 @@ class GiphyGif {
       trendingDatetime: json['trending_datetime'] == null
           ? null
           : DateTime.parse(json['trending_datetime'] as String),
-      user: json['user'] == null
-          ? null
-          : GiphyUser.fromJson(json['user'] as Map<String, dynamic>),
+      user: json['user'] == null ? null : GiphyUser.fromJson(json['user'] as Map<String, dynamic>),
       images: json['images'] == null
           ? null
           : GiphyImages.fromJson(json['images'] as Map<String, dynamic>));
@@ -93,8 +91,8 @@ class GiphyGif {
       'is_sticker': isSticker,
       'import_datetime': importDatetime?.toIso8601String(),
       'trending_datetime': trendingDatetime?.toIso8601String(),
-      'user': user,
-      'images': images
+      'user': user.toJson(),
+      'images': images.toJson(),
     };
   }
 
