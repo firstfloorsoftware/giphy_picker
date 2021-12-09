@@ -80,17 +80,20 @@ class _GiphyTrendingWidgetState extends State<GiphyTrendingWidget> {
                     return false;
                   },
                 )
-              : Center(
-                  child: Text('No results'),
-                );
+              : widget.noResultWidget ??
+                  Center(
+                    child: Text('No results'),
+                  );
         } else if (snapshot.hasError) {
-          return Center(
-            child: Text('An error occurred'),
-          );
+          return widget.errorWidget ??
+              Center(
+                child: Text('An error occurred'),
+              );
         }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
+        return widget.loadingWidget ??
+            Center(
+              child: CircularProgressIndicator(),
+            );
       },
     );
   }
