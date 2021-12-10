@@ -57,20 +57,16 @@ class GiphyImages {
     return GiphyImages(
       fixedHeightStill: json['fixed_height_still'] == null
           ? null
-          : GiphyStillImage.fromJson(
-              json['fixed_height_still'] as Map<String, dynamic>),
+          : GiphyStillImage.fromJson(json['fixed_height_still'] as Map<String, dynamic>),
       originalStill: json['original_still'] == null
           ? null
-          : GiphyStillImage.fromJson(
-              json['original_still'] as Map<String, dynamic>),
+          : GiphyStillImage.fromJson(json['original_still'] as Map<String, dynamic>),
       fixedWidth: json['fixed_width'] == null
           ? null
-          : GiphyFullImage.fromJson(
-              json['fixed_width'] as Map<String, dynamic>),
+          : GiphyFullImage.fromJson(json['fixed_width'] as Map<String, dynamic>),
       fixedHeightSmallStill: json['fixed_height_small_still'] == null
           ? null
-          : GiphyStillImage.fromJson(
-              json['fixed_height_small_still'] as Map<String, dynamic>),
+          : GiphyStillImage.fromJson(json['fixed_height_small_still'] as Map<String, dynamic>),
       fixedHeightDownsampled: json['fixed_height_downsampled'] == null
           ? null
           : GiphyDownsampledImage.fromJson(
@@ -80,56 +76,43 @@ class GiphyImages {
           : GiphyPreviewImage.fromJson(json['preview'] as Map<String, dynamic>),
       fixedHeightSmall: json['fixed_height_small'] == null
           ? null
-          : GiphyFullImage.fromJson(
-              json['fixed_height_small'] as Map<String, dynamic>),
+          : GiphyFullImage.fromJson(json['fixed_height_small'] as Map<String, dynamic>),
       downsizedStill: json['downsized_still'] == null
           ? null
-          : GiphyStillImage.fromJson(
-              json['downsized_still'] as Map<String, dynamic>),
+          : GiphyStillImage.fromJson(json['downsized_still'] as Map<String, dynamic>),
       downsized: json['downsized'] == null
           ? null
-          : GiphyDownsizedImage.fromJson(
-              json['downsized'] as Map<String, dynamic>),
+          : GiphyDownsizedImage.fromJson(json['downsized'] as Map<String, dynamic>),
       downsizedLarge: json['downsized_large'] == null
           ? null
-          : GiphyDownsizedImage.fromJson(
-              json['downsized_large'] as Map<String, dynamic>),
+          : GiphyDownsizedImage.fromJson(json['downsized_large'] as Map<String, dynamic>),
       fixedWidthSmallStill: json['fixed_width_small_still'] == null
           ? null
-          : GiphyStillImage.fromJson(
-              json['fixed_width_small_still'] as Map<String, dynamic>),
+          : GiphyStillImage.fromJson(json['fixed_width_small_still'] as Map<String, dynamic>),
       previewWebp: json['preview_webp'] == null
           ? null
-          : GiphyWebPImage.fromJson(
-              json['preview_webp'] as Map<String, dynamic>),
+          : GiphyWebPImage.fromJson(json['preview_webp'] as Map<String, dynamic>),
       fixedWidthStill: json['fixed_width_still'] == null
           ? null
-          : GiphyStillImage.fromJson(
-              json['fixed_width_still'] as Map<String, dynamic>),
+          : GiphyStillImage.fromJson(json['fixed_width_still'] as Map<String, dynamic>),
       fixedWidthSmall: json['fixed_width_small'] == null
           ? null
-          : GiphyFullImage.fromJson(
-              json['fixed_width_small'] as Map<String, dynamic>),
+          : GiphyFullImage.fromJson(json['fixed_width_small'] as Map<String, dynamic>),
       downsizedSmall: json['downsized_small'] == null
           ? null
-          : GiphyPreviewImage.fromJson(
-              json['downsized_small'] as Map<String, dynamic>),
+          : GiphyPreviewImage.fromJson(json['downsized_small'] as Map<String, dynamic>),
       fixedWidthDownsampled: json['fixed_width_downsampled'] == null
           ? null
-          : GiphyDownsampledImage.fromJson(
-              json['fixed_width_downsampled'] as Map<String, dynamic>),
+          : GiphyDownsampledImage.fromJson(json['fixed_width_downsampled'] as Map<String, dynamic>),
       downsizedMedium: json['downsized_medium'] == null
           ? null
-          : GiphyPreviewImage.fromJson(
-              json['downsized_medium'] as Map<String, dynamic>),
+          : GiphyPreviewImage.fromJson(json['downsized_medium'] as Map<String, dynamic>),
       original: json['original'] == null
           ? null
-          : GiphyOriginalImage.fromJson(
-              json['original'] as Map<String, dynamic>),
+          : GiphyOriginalImage.fromJson(json['original'] as Map<String, dynamic>),
       fixedHeight: json['fixed_height'] == null
           ? null
-          : GiphyFullImage.fromJson(
-              json['fixed_height'] as Map<String, dynamic>),
+          : GiphyFullImage.fromJson(json['fixed_height'] as Map<String, dynamic>),
       hd: json['hd'] == null
           ? null
           : GiphyPreviewImage.fromJson(json['hd'] as Map<String, dynamic>),
@@ -138,45 +121,42 @@ class GiphyImages {
           : GiphyLoopingImage.fromJson(json['looping'] as Map<String, dynamic>),
       originalMp4: json['original_mp4'] == null
           ? null
-          : GiphyPreviewImage.fromJson(
-              json['original_mp4'] as Map<String, dynamic>),
+          : GiphyPreviewImage.fromJson(json['original_mp4'] as Map<String, dynamic>),
       previewGif: json['preview_gif'] == null
           ? null
-          : GiphyDownsizedImage.fromJson(
-              json['preview_gif'] as Map<String, dynamic>),
+          : GiphyDownsizedImage.fromJson(json['preview_gif'] as Map<String, dynamic>),
       w480Still: json['480w_still'] == null
           ? null
-          : GiphyStillImage.fromJson(
-              json['480w_still'] as Map<String, dynamic>),
+          : GiphyStillImage.fromJson(json['480w_still'] as Map<String, dynamic>),
     );
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'fixed_height_still': fixedHeightStill,
-      'original_still': originalStill,
-      'fixed_width': fixedWidth,
-      'fixed_height_small_still': fixedHeightSmallStill,
-      'fixed_height_downsampled': fixedHeightDownsampled,
-      'preview': preview,
-      'fixed_height_small': fixedHeightSmall,
-      'downsized_still': downsizedStill,
-      'downsized': downsized,
-      'downsized_large': downsizedLarge,
-      'fixed_width_small_still': fixedWidthSmallStill,
-      'preview_webp': previewWebp,
-      'fixed_width_still': fixedWidthStill,
-      'fixed_width_small': fixedWidthSmall,
-      'downsized_small': downsizedSmall,
-      'fixed_width_downsampled': fixedWidthDownsampled,
-      'downsized_medium': downsizedMedium,
-      'original': original,
-      'fixed_height': fixedHeight,
-      'hd': hd,
-      'looping': looping,
-      'original_mp4': originalMp4,
-      'preview_gif': previewGif,
-      '480w_still': w480Still
+      'fixed_height_still': fixedHeightStill?.toJson(),
+      'original_still': originalStill?.toJson(),
+      'fixed_width': fixedWidth?.toJson(),
+      'fixed_height_small_still': fixedHeightSmallStill?.toJson(),
+      'fixed_height_downsampled': fixedHeightDownsampled?.toJson(),
+      'preview': preview?.toJson(),
+      'fixed_height_small': fixedHeightSmall?.toJson(),
+      'downsized_still': downsizedStill?.toJson(),
+      'downsized': downsized?.toJson(),
+      'downsized_large': downsizedLarge?.toJson(),
+      'fixed_width_small_still': fixedWidthSmallStill?.toJson(),
+      'preview_webp': previewWebp?.toJson(),
+      'fixed_width_still': fixedWidthStill?.toJson(),
+      'fixed_width_small': fixedWidthSmall?.toJson(),
+      'downsized_small': downsizedSmall?.toJson(),
+      'fixed_width_downsampled': fixedWidthDownsampled?.toJson(),
+      'downsized_medium': downsizedMedium?.toJson(),
+      'original': original?.toJson(),
+      'fixed_height': fixedHeight?.toJson(),
+      'hd': hd?.toJson(),
+      'looping': looping?.toJson(),
+      'original_mp4': originalMp4?.toJson(),
+      'preview_gif': previewGif?.toJson(),
+      '480w_still': w480Still?.toJson(),
     };
   }
 
