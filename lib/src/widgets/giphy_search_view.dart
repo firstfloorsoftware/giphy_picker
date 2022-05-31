@@ -20,7 +20,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   @override
   void initState() {
     // initiate search on next frame (we need context)
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final giphy = GiphyContext.of(context);
       _debouncer = Debouncer(
         delay: giphy.searchDelay,
