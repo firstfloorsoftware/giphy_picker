@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class GiphyOverlay extends StatelessWidget {
   final Widget? child;
 
-  const GiphyOverlay({this.child});
+  const GiphyOverlay({super.key, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class GiphyOverlay extends StatelessWidget {
               child: Container(
                   alignment: Alignment.centerLeft,
                   color: Colors.black45,
-                  padding: EdgeInsets.symmetric(vertical: 2),
+                  padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Image.asset(
                       'assets/PoweredBy_200px-Black_HorizText.png',
                       package: 'giphy_picker',

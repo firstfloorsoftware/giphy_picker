@@ -33,16 +33,13 @@ class GiphyPicker {
     GiphyPreviewType? previewType,
   }) async {
     GiphyGif? result;
-    final _decorator = decorator ?? GiphyDecorator();
+    final d = decorator ?? const GiphyDecorator();
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => GiphyContext(
-          decorator: _decorator,
-          previewType: previewType ?? GiphyPreviewType.previewGif,
-          child: GiphySearchPage(
-            title: title,
-          ),
+          decorator: d,
+          previewType: previewType ?? GiphyPreviewType.previewWebp,
           apiKey: apiKey,
           rating: rating,
           language: lang,
@@ -59,6 +56,9 @@ class GiphyPicker {
           },
           showPreviewPage: showPreviewPage,
           searchText: searchText,
+          child: GiphySearchPage(
+            title: title,
+          ),
         ),
         fullscreenDialog: fullScreenDialog,
       ),
@@ -72,11 +72,11 @@ class GiphyPicker {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Giphy error'),
+          title: const Text('Giphy error'),
           content: Text('An error occurred. $error'),
           actions: <Widget>[
             TextButton(
-              child: Text("Close"),
+              child: const Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
               },

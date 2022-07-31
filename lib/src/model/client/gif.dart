@@ -42,8 +42,8 @@ class GiphyGif {
       this.trendingDatetime,
       GiphyUser? user,
       GiphyImages? images})
-      : this.user = user ?? GiphyUser(),
-        this.images = images ?? GiphyImages();
+      : user = user ?? GiphyUser(),
+        images = images ?? GiphyImages();
 
   factory GiphyGif.fromJson(Map<String, dynamic> json) => GiphyGif(
       title: json['title'] as String?,

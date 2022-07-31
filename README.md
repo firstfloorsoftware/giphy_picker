@@ -1,6 +1,6 @@
 # giphy_picker
 
-A plugin that allows you to pick animated GIF images from [Giphy](https://giphy.com).
+A Flutter package that allows you to pick animated GIF images from [Giphy](https://giphy.com).
 
 ![Gif](https://github.com/firstfloorsoftware/giphy_picker/blob/master/assets/demo.gif)
 
@@ -35,4 +35,4 @@ Widget build(BuildContext context) {
 ```
 
 ## Acknowledgements
-This plugin depends on the [giphy_client](https://pub.dartlang.org/packages/giphy_client).
+This package depends on the [giphy_client](https://pub.dartlang.org/packages/giphy_client).

@@ -5,7 +5,7 @@ import 'giphy_context.dart';
 class GiphySearchPage extends StatelessWidget {
   final Widget? title;
 
-  const GiphySearchPage({this.title});
+  const GiphySearchPage({super.key, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,9 @@ class GiphySearchPage extends StatelessWidget {
         data: giphyDecorator.giphyTheme ?? Theme.of(context),
         child: Scaffold(
           appBar: giphyDecorator.showAppBar ? AppBar(title: title) : null,
-          body: SafeArea(
-            child: GiphySearchView(),
+          body: const SafeArea(
             bottom: false,
+            child: GiphySearchView(),
           ),
         ),
       );

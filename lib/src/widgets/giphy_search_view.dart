@@ -7,8 +7,10 @@ import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
 /// Provides the UI for searching Giphy gif images.
 class GiphySearchView extends StatefulWidget {
+  const GiphySearchView({super.key});
+
   @override
-  _GiphySearchViewState createState() => _GiphySearchViewState();
+  State<GiphySearchView> createState() => _GiphySearchViewState();
 }
 
 class _GiphySearchViewState extends State<GiphySearchView> {
@@ -20,7 +22,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   @override
   void initState() {
     // initiate search on next frame (we need context)
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final giphy = GiphyContext.of(context);
       _debouncer = Debouncer(
         delay: giphy.searchDelay,
@@ -56,10 +58,10 @@ class _GiphySearchViewState extends State<GiphySearchView> {
         color: giphyDecorator.giphyTheme?.scaffoldBackgroundColor,
         child: Row(
           children: [
-            if (!giphyDecorator.showAppBar) BackButton(),
+            if (!giphyDecorator.showAppBar) const BackButton(),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextField(
                   controller: _textController,
                   decoration: inputDecoration,
@@ -94,11 +96,11 @@ class _GiphySearchViewState extends State<GiphySearchView> {
                             return false;
                           },
                         )
-                      : Center(child: Text('No results'));
+                      : const Center(child: Text('No results'));
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('An error occurred'));
+                  return const Center(child: Text('An error occurred'));
                 }
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }))
     ]);
   }

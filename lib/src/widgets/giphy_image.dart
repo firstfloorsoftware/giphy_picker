@@ -15,14 +15,13 @@ class GiphyImage extends StatefulWidget {
 
   /// Loads an image from given url.
   const GiphyImage(
-      {Key? key,
+      {super.key,
       this.url,
       this.placeholder,
       this.width,
       this.height,
       this.fit,
-      this.renderGiphyOverlay = true})
-      : super(key: key);
+      this.renderGiphyOverlay = true});
 
   /// Loads the original image for given Giphy gif.
   GiphyImage.original(
@@ -49,7 +48,7 @@ class GiphyImage extends StatefulWidget {
         super(key: key ?? Key(gif.id));
 
   @override
-  _GiphyImageState createState() => _GiphyImageState();
+  State<GiphyImage> createState() => _GiphyImageState();
 
   /// Loads the images bytes for given url from Giphy.
   static Future<Uint8List?> load(String? url, {Client? client}) async {
@@ -88,6 +87,7 @@ class _GiphyImageState extends State<GiphyImage> {
           }
           return image;
         }
-        return widget.placeholder ?? Center(child: CircularProgressIndicator());
+        return widget.placeholder ??
+            const Center(child: CircularProgressIndicator());
       });
 }

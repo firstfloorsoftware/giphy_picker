@@ -6,7 +6,7 @@ import 'package:giphy_picker/giphy_picker.dart';
 /// A general-purpose repository with support for on-demand paged retrieval and caching of values of type T.
 abstract class Repository<T> {
   final HashMap<int, T> _cache = HashMap<int, T>();
-  final Set<int> _pagesLoading = Set<int>();
+  final Set<int> _pagesLoading = <int>{};
   final HashMap<int, Completer<T>> _completers = HashMap<int, Completer<T>>();
   final int pageSize;
   final ErrorListener? onError;
@@ -56,7 +56,9 @@ abstract class Repository<T> {
 
     if (_totalCount == 0) {
       // complete all with null
-      _completers.values.forEach((c) => c.complete(null));
+      for (var c in _completers.values) {
+        c.complete(null);
+      }
       _completers.clear();
     } else {
       for (var i = 0; i < page.values.length; i++) {

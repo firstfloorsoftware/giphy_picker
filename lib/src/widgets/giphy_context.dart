@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giphy_picker/src/model/giphy_client.dart';
 import 'package:giphy_picker/giphy_picker.dart';
-import 'package:giphy_picker/src/model/giphy_decorator.dart';
 
 /// Provides the context for a Giphy search operation, and makes its data available to its widget sub-tree.
 class GiphyContext extends InheritedWidget {
@@ -20,8 +18,8 @@ class GiphyContext extends InheritedWidget {
   final Duration searchDelay;
 
   const GiphyContext({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.apiKey,
     this.rating = GiphyRating.g,
     this.language = GiphyLanguage.english,
@@ -33,7 +31,7 @@ class GiphyContext extends InheritedWidget {
     this.searchDelay = const Duration(milliseconds: 500),
     required this.decorator,
     this.previewType,
-  }) : super(key: key, child: child);
+  });
 
   void select(GiphyGif gif) => onSelected?.call(gif);
   void error(dynamic error) => onError?.call(error);
@@ -42,13 +40,13 @@ class GiphyContext extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => false;
 
   static GiphyContext of(BuildContext context) {
-    final settings = context
+    final giphy = context
         .getElementForInheritedWidgetOfExactType<GiphyContext>()
         ?.widget as GiphyContext?;
 
-    if (settings == null) {
+    if (giphy == null) {
       throw 'Required GiphyContext widget not found. Make sure to wrap your widget with GiphyContext.';
     }
-    return settings;
+    return giphy;
   }
 }
