@@ -26,7 +26,7 @@ class GiphyPicker {
     ErrorListener? onError,
     bool showPreviewPage = true,
     bool fullScreenDialog = true,
-    String searchText = 'Search GIPHY',
+    String searchHintText = 'Search GIPHY',
     GiphyPreviewType previewType = GiphyPreviewType.previewWebp,
   }) async {
     GiphyGif? result;
@@ -50,7 +50,7 @@ class GiphyPicker {
             Navigator.pop(context);
           },
           showPreviewPage: showPreviewPage,
-          searchText: searchText,
+          searchHintText: searchHintText,
           child: GiphySearchPage(
             title: title,
           ),

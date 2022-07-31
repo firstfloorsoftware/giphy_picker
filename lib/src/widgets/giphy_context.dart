@@ -10,7 +10,7 @@ class GiphyContext extends InheritedWidget {
   final ValueChanged<GiphyGif>? onSelected;
   final ErrorListener? onError;
   final bool showPreviewPage;
-  final String searchText;
+  final String searchHintText;
   final GiphyPreviewType? previewType;
 
   /// Debounce delay when searching
@@ -26,7 +26,7 @@ class GiphyContext extends InheritedWidget {
     this.onSelected,
     this.onError,
     this.showPreviewPage = true,
-    this.searchText = 'Search Giphy',
+    this.searchHintText = 'Search Giphy',
     this.searchDelay = const Duration(milliseconds: 500),
     this.previewType,
   });
