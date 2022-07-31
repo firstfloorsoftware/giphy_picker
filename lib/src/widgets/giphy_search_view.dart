@@ -44,7 +44,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
     final giphy = GiphyContext.of(context);
 
     final inputDecoration = InputDecoration(
-      hintText: giphy.searchText,
+      hintText: giphy.searchHintText,
     );
     return Column(children: <Widget>[
       Padding(
