@@ -34,12 +34,9 @@ class _GiphyThumbnailGridState extends State<GiphyThumbnailGrid> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => Theme(
-                      data: giphy.decorator.giphyTheme ?? Theme.of(context),
-                      child: GiphyPreviewPage(
-                        gif: gif,
-                        onSelected: giphy.onSelected,
-                      ),
+                    builder: (BuildContext context) => GiphyPreviewPage(
+                      gif: gif,
+                      onSelected: giphy.onSelected,
                     ),
                   ),
                 );

@@ -42,34 +42,17 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   @override
   Widget build(BuildContext context) {
     final giphy = GiphyContext.of(context);
-    final giphyDecorator = giphy.decorator;
 
     final inputDecoration = InputDecoration(
       hintText: giphy.searchText,
     );
-    if (giphyDecorator.giphyTheme != null) {
-      inputDecoration
-          .applyDefaults(giphyDecorator.giphyTheme!.inputDecorationTheme);
-    }
-
     return Column(children: <Widget>[
-      Material(
-        elevation: giphyDecorator.searchElevation,
-        color: giphyDecorator.giphyTheme?.scaffoldBackgroundColor,
-        child: Row(
-          children: [
-            if (!giphyDecorator.showAppBar) const BackButton(),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: TextField(
-                  controller: _textController,
-                  decoration: inputDecoration,
-                  onChanged: (value) => _delayedSearch(giphy, value),
-                ),
-              ),
-            ),
-          ],
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: TextField(
+          controller: _textController,
+          decoration: inputDecoration,
+          onChanged: (value) => _delayedSearch(giphy, value),
         ),
       ),
       Expanded(

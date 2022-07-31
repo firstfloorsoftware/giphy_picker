@@ -3,14 +3,12 @@ library giphy_picker;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_client.dart';
-import 'package:giphy_picker/src/model/giphy_decorator.dart';
 import 'package:giphy_picker/src/model/giphy_preview_types.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 
 export 'package:giphy_picker/src/model/giphy_client.dart';
 export 'package:giphy_picker/src/widgets/giphy_image.dart';
-export 'package:giphy_picker/src/model/giphy_decorator.dart';
 export 'package:giphy_picker/src/model/giphy_preview_types.dart';
 
 typedef ErrorListener = void Function(dynamic error);
@@ -27,19 +25,16 @@ class GiphyPicker {
     Widget? title,
     ErrorListener? onError,
     bool showPreviewPage = true,
-    GiphyDecorator? decorator,
     bool fullScreenDialog = true,
     String searchText = 'Search GIPHY',
-    GiphyPreviewType? previewType,
+    GiphyPreviewType previewType = GiphyPreviewType.previewWebp,
   }) async {
     GiphyGif? result;
-    final d = decorator ?? const GiphyDecorator();
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => GiphyContext(
-          decorator: d,
-          previewType: previewType ?? GiphyPreviewType.previewWebp,
+          previewType: previewType,
           apiKey: apiKey,
           rating: rating,
           language: lang,
