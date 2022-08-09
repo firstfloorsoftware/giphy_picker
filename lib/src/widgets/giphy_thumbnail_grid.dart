@@ -37,6 +37,9 @@ class _GiphyThumbnailGridState extends State<GiphyThumbnailGrid> {
                     builder: (BuildContext context) => GiphyPreviewPage(
                       gif: gif,
                       onSelected: giphy.onSelected,
+                      title: gif.title?.isNotEmpty == true
+                          ? Text(gif.title!)
+                          : null,
                     ),
                   ),
                 );
