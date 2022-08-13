@@ -51,8 +51,8 @@ abstract class Repository<T> {
   }
 
   void _onPageRetrieved(Page<T> page) {
-    _pagesLoading.remove(page);
     _totalCount = page.totalCount;
+    _pagesLoading.remove(page.page);
 
     if (_totalCount == 0) {
       // complete all with null
