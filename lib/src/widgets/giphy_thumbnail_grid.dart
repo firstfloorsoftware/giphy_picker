@@ -30,21 +30,23 @@ class _GiphyThumbnailGridState extends State<GiphyThumbnailGrid> {
               // display preview page
               final giphy = GiphyContext.of(context);
               final gif = await widget.repo.get(index);
-              if (mounted && giphy.showPreviewPage) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => GiphyPreviewPage(
-                      gif: gif,
-                      onSelected: giphy.onSelected,
-                      title: gif.title?.isNotEmpty == true
-                          ? Text(gif.title!)
-                          : null,
+              if (gif != null) {
+                if (mounted && giphy.showPreviewPage) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => GiphyPreviewPage(
+                        gif: gif,
+                        onSelected: giphy.onSelected,
+                        title: gif.title?.isNotEmpty == true
+                            ? Text(gif.title!)
+                            : null,
+                      ),
                     ),
-                  ),
-                );
-              } else {
-                giphy.onSelected?.call(gif);
+                  );
+                } else {
+                  giphy.onSelected?.call(gif);
+                }
               }
             }),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

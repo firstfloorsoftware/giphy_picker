@@ -1,33 +1,35 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:math';
 
 import 'package:giphy_picker/giphy_picker.dart';
 
 /// A general-purpose repository with support for on-demand paged retrieval and caching of values of type T.
 abstract class Repository<T> {
-  final HashMap<int, T> _cache = HashMap<int, T>();
+  final HashMap<int, T?> _cache = HashMap<int, T?>();
   final Set<int> _pagesLoading = <int>{};
-  final HashMap<int, Completer<T>> _completers = HashMap<int, Completer<T>>();
+  final HashMap<int, Completer<T?>> _completers = HashMap<int, Completer<T?>>();
   final int pageSize;
+  final int maxTotalCount;
   final ErrorListener? onError;
   int _totalCount = 0;
 
-  Repository({required this.pageSize, this.onError});
+  Repository(
+      {required this.pageSize, required this.maxTotalCount, this.onError});
 
   /// The total number of values available.
   int get totalCount => _totalCount;
 
   /// Asynchronously retrieves the value at specified index. When not available in local cache
   /// the page containing the value is retrieved.
-  Future<T> get(int index) {
+
+  Future<T?> get(int index) {
     // index must within bounds
     assert(index == 0 || index > 0 && index < _totalCount);
 
-    final value = _cache[index];
-
-    // value is availableÍ
-    if (value != null) {
-      return Future.value(value);
+    // consult cache
+    if (_cache.containsKey(index)) {
+      return Future.value(_cache[index]);
     }
 
     final page = index ~/ pageSize;
@@ -43,7 +45,7 @@ abstract class Repository<T> {
     // value is being retrieved
     var completer = _completers[index];
     if (completer == null) {
-      completer = Completer<T>();
+      completer = Completer<T?>();
       _completers[index] = completer;
     }
 
@@ -51,9 +53,12 @@ abstract class Repository<T> {
   }
 
   void _onPageRetrieved(Page<T> page) {
-    _totalCount = page.totalCount;
     _pagesLoading.remove(page.page);
 
+    // set total count once, and limit to max total
+    if (_totalCount == 0) {
+      _totalCount = min(maxTotalCount, page.totalCount);
+    }
     if (_totalCount == 0) {
       // complete all with null
       for (var c in _completers.values) {
@@ -61,10 +66,11 @@ abstract class Repository<T> {
       }
       _completers.clear();
     } else {
-      for (var i = 0; i < page.values.length; i++) {
-        // store value
+      for (var i = 0; i < pageSize; i++) {
         final index = page.page * pageSize + i;
-        final value = page.values[i];
+
+        // cache value, use null if not found
+        final value = i < page.values.length ? page.values[i] : null;
         _cache[index] = value;
 
         // complete optional completer

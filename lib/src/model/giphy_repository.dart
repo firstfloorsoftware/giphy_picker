@@ -22,11 +22,16 @@ class GiphyRepository extends Repository<GiphyGif> {
   GiphyRepository({
     required String apiKey,
     required this.getCollection,
-    this.maxConcurrentPreviewLoad = 4,
+    this.maxConcurrentPreviewLoad = 8,
     int pageSize = 25,
     ErrorListener? onError,
     this.previewType,
-  }) : super(pageSize: pageSize, onError: onError) {
+  }) : super(
+          pageSize: pageSize,
+          // max number of gifs, limited by giphy api
+          maxTotalCount: 5000,
+          onError: onError,
+        ) {
     _giphyClient = GiphyClient(apiKey: apiKey, client: _client);
   }
 
@@ -88,7 +93,10 @@ class GiphyRepository extends Repository<GiphyGif> {
     }
   }
 
-  Future<Uint8List?> _loadPreviewImage(GiphyGif gif) async {
+  Future<Uint8List?> _loadPreviewImage(GiphyGif? gif) async {
+    if (gif == null) {
+      return null;
+    }
     // fallback to still image if preview is empty
     String? url;
     switch (previewType) {
