@@ -13,9 +13,11 @@ abstract class Repository<T> {
   final int maxTotalCount;
   final ErrorListener? onError;
   int _totalCount = 0;
+  int _minTotalCount;
 
   Repository(
-      {required this.pageSize, required this.maxTotalCount, this.onError});
+      {required this.pageSize, required this.maxTotalCount, this.onError})
+      : _minTotalCount = maxTotalCount;
 
   /// The total number of values available.
   int get totalCount => _totalCount;
@@ -24,6 +26,9 @@ abstract class Repository<T> {
   /// the page containing the value is retrieved.
 
   Future<T?> get(int index) {
+    // make sure index does not exceed minTotalCount
+    index %= _minTotalCount;
+
     // index must within bounds
     assert(index == 0 || index > 0 && index < _totalCount);
 
@@ -55,10 +60,11 @@ abstract class Repository<T> {
   void _onPageRetrieved(Page<T> page) {
     _pagesLoading.remove(page.page);
 
-    // set total count once, and limit to max total
-    if (_totalCount == 0) {
-      _totalCount = min(maxTotalCount, page.totalCount);
-    }
+    // limit to max total
+    _totalCount = max(_totalCount, min(maxTotalCount, page.totalCount));
+    // keep min total count, used for get(index) never exceeding minimum total count
+    _minTotalCount = min(_minTotalCount, page.totalCount);
+
     if (_totalCount == 0) {
       // complete all with null
       for (var c in _completers.values) {
