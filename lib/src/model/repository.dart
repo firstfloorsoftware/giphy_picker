@@ -63,7 +63,9 @@ abstract class Repository<T> {
     // limit to max total
     _totalCount = max(_totalCount, min(maxTotalCount, page.totalCount));
     // keep min total count, used for get(index) never exceeding minimum total count
-    _minTotalCount = min(_minTotalCount, page.totalCount);
+    if (page.totalCount > 0) {
+      _minTotalCount = min(_minTotalCount, page.totalCount);
+    }
 
     if (_totalCount == 0) {
       // complete all with null
