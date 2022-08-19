@@ -6,10 +6,15 @@ import 'package:giphy_picker/src/widgets/giphy_image.dart';
 class GiphyPreviewPage extends StatelessWidget {
   final GiphyGif gif;
   final Widget? title;
+  final bool showGiphyAttribution;
   final ValueChanged<GiphyGif>? onSelected;
 
   const GiphyPreviewPage(
-      {super.key, required this.gif, required this.onSelected, this.title});
+      {super.key,
+      required this.gif,
+      required this.onSelected,
+      this.title,
+      this.showGiphyAttribution = true});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +38,7 @@ class GiphyPreviewPage extends StatelessWidget {
                 ? double.maxFinite
                 : null,
             fit: BoxFit.contain,
+            showGiphyAttribution: showGiphyAttribution,
           )),
         ));
   }

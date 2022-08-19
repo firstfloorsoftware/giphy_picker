@@ -10,12 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Giphy Picker Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Giphy Picker Demo'),
+      home: MyHomePage(title: 'Giphy Picker Demo'),
     );
   }
 }
@@ -41,11 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Center(
           child: _gif == null
               ? const Text('Pick a gif..')
-              : GiphyImage.original(gif: _gif!),
+              : GiphyImage.original(
+                  gif: _gif!,
+                  showGiphyAttribution: false,
+                ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.search),
         onPressed: () async {
           // request your Giphy API key at https://developers.giphy.com/

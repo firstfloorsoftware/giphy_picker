@@ -25,6 +25,7 @@ class GiphyPicker {
     Widget? title,
     ErrorListener? onError,
     bool showPreviewPage = true,
+    bool showGiphyAttribution = true,
     bool fullScreenDialog = true,
     String searchHintText = 'Search GIPHY',
     GiphyPreviewType previewType = GiphyPreviewType.previewWebp,
@@ -50,6 +51,7 @@ class GiphyPicker {
             Navigator.pop(context);
           },
           showPreviewPage: showPreviewPage,
+          showGiphyAttribution: showGiphyAttribution,
           searchHintText: searchHintText,
           child: GiphySearchPage(
             title: title,

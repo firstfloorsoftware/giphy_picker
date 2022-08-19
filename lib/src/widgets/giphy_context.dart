@@ -10,6 +10,7 @@ class GiphyContext extends InheritedWidget {
   final ValueChanged<GiphyGif>? onSelected;
   final ErrorListener? onError;
   final bool showPreviewPage;
+  final bool showGiphyAttribution;
   final String searchHintText;
   final GiphyPreviewType? previewType;
 
@@ -26,6 +27,7 @@ class GiphyContext extends InheritedWidget {
     this.onSelected,
     this.onError,
     this.showPreviewPage = true,
+    this.showGiphyAttribution = true,
     this.searchHintText = 'Search Giphy',
     this.searchDelay = const Duration(milliseconds: 500),
     this.previewType,

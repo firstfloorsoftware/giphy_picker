@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_repository.dart';
 import 'package:giphy_picker/src/utils/debouncer.dart';
+import 'package:giphy_picker/src/widgets/giphy_attribution_mark.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
@@ -61,13 +62,17 @@ class _GiphySearchViewState extends State<GiphySearchView> {
               builder: (BuildContext context,
                   AsyncSnapshot<GiphyRepository> snapshot) {
                 if (snapshot.hasData) {
+                  final grid = GiphyThumbnailGrid(
+                      key: Key('${snapshot.data.hashCode}'),
+                      repo: snapshot.data!,
+                      scrollController: _scrollController);
+
                   return snapshot.data!.totalCount > 0
                       ? NotificationListener(
                           child: RefreshIndicator(
-                              child: GiphyThumbnailGrid(
-                                  key: Key('${snapshot.data.hashCode}'),
-                                  repo: snapshot.data!,
-                                  scrollController: _scrollController),
+                              child: giphy.showGiphyAttribution
+                                  ? GiphyAttributionMark(child: grid)
+                                  : grid,
                               onRefresh: () =>
                                   _search(giphy, term: _textController.text)),
                           onNotification: (n) {

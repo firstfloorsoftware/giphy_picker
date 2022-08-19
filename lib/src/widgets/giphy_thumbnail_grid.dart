@@ -19,8 +19,15 @@ class GiphyThumbnailGrid extends StatefulWidget {
 class _GiphyThumbnailGridState extends State<GiphyThumbnailGrid> {
   @override
   Widget build(BuildContext context) {
+    final giphy = GiphyContext.of(context);
     return GridView.builder(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.fromLTRB(
+          10,
+          10,
+          10,
+          // bottom padding takes attribution into account
+          giphy.showGiphyAttribution ? 34 : 10,
+        ),
         controller: widget.scrollController,
         itemCount: widget.repo.totalCount,
         itemBuilder: (BuildContext context, int index) => GestureDetector(
@@ -37,6 +44,7 @@ class _GiphyThumbnailGridState extends State<GiphyThumbnailGrid> {
                     MaterialPageRoute(
                       builder: (BuildContext context) => GiphyPreviewPage(
                         gif: gif,
+                        showGiphyAttribution: giphy.showGiphyAttribution,
                         onSelected: giphy.onSelected,
                         title: gif.title?.isNotEmpty == true
                             ? Text(gif.title!)
