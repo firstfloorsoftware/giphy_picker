@@ -50,7 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // request your Giphy API key at https://developers.giphy.com/
           final gif = await GiphyPicker.pickGif(
             context: context,
-            apiKey: '[YOUR GIPHY APIKEY]',
+            // YOUR GIPHY APIKEY HERE
+            apiKey: '',
           );
 
           if (gif != null) {

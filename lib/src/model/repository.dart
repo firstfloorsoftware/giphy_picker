@@ -88,7 +88,7 @@ abstract class Repository<T> {
     }
   }
 
-  void _onPageError(int page, Object error, StackTrace stackTrace) {
+  void _onPageError(int page, GiphyError error, StackTrace stackTrace) {
     _pagesLoading.remove(page);
 
     // complete completers of this page with an error

@@ -86,7 +86,14 @@ class _GiphySearchViewState extends State<GiphySearchView> {
                         )
                       : const Center(child: Text('No results'));
                 } else if (snapshot.hasError) {
-                  return const Center(child: Text('An error occurred'));
+                  return Center(
+                      child: Text(
+                    snapshot.error.toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: Theme.of(context).errorColor),
+                  ));
                 }
                 return const Center(child: CircularProgressIndicator());
               }))
