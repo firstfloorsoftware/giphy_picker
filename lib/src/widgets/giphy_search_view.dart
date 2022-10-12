@@ -132,7 +132,6 @@ class _GiphySearchViewState extends State<GiphySearchView> {
       if (mounted) {
         _repoController.addError(error);
       }
-      giphy.onError?.call(error);
     }
   }
 }
