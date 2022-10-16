@@ -4,6 +4,7 @@ import 'package:giphy_picker/src/model/giphy_repository.dart';
 import 'package:giphy_picker/src/utils/debouncer.dart';
 import 'package:giphy_picker/src/widgets/giphy_attribution_mark.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
+import 'package:giphy_picker/src/widgets/giphy_search_text.dart';
 import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
 /// Provides the UI for searching Giphy gif images.
@@ -25,9 +26,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
     // initiate search on next frame (we need context)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final giphy = GiphyContext.of(context);
-      _debouncer = Debouncer(
-        delay: giphy.searchDelay,
-      );
+      _debouncer = Debouncer(delay: giphy.searchDelay);
       _search(giphy);
     });
     super.initState();
@@ -44,17 +43,12 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   Widget build(BuildContext context) {
     final giphy = GiphyContext.of(context);
 
-    final inputDecoration = InputDecoration(
-      hintText: giphy.searchHintText,
-    );
     return Column(children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: TextField(
-          controller: _textController,
-          decoration: inputDecoration,
-          onChanged: (value) => _delayedSearch(giphy, value),
-        ),
+      giphy.searchText(
+        context,
+        _textController,
+        giphy.searchHintText,
+        (value) => _delayedSearch(giphy, value),
       ),
       Expanded(
           child: StreamBuilder(
@@ -86,16 +80,9 @@ class _GiphySearchViewState extends State<GiphySearchView> {
                         )
                       : const Center(child: Text('No results'));
                 } else if (snapshot.hasError) {
-                  return Center(
-                      child: Text(
-                    snapshot.error.toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: Theme.of(context).errorColor),
-                  ));
+                  return giphy.searchError(context, snapshot.error!);
                 }
-                return const Center(child: CircularProgressIndicator());
+                return giphy.searchLoading(context);
               }))
     ]);
   }

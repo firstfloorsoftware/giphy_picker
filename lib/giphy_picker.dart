@@ -29,6 +29,9 @@ class GiphyPicker {
     bool fullScreenDialog = true,
     String searchHintText = 'Search GIPHY',
     GiphyPreviewType previewType = GiphyPreviewType.previewWebp,
+    SearchTextBuilder? searchText,
+    SearchLoadingBuilder? searchLoading,
+    SearchErrorBuilder? searchError,
   }) async {
     GiphyGif? result;
     await Navigator.push(
@@ -53,6 +56,9 @@ class GiphyPicker {
           showPreviewPage: showPreviewPage,
           showGiphyAttribution: showGiphyAttribution,
           searchHintText: searchHintText,
+          searchText: searchText,
+          searchLoading: searchLoading,
+          searchError: searchError,
           child: GiphySearchPage(
             title: title,
           ),
