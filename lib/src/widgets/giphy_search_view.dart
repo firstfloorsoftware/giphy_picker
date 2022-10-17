@@ -4,7 +4,6 @@ import 'package:giphy_picker/src/model/giphy_repository.dart';
 import 'package:giphy_picker/src/utils/debouncer.dart';
 import 'package:giphy_picker/src/widgets/giphy_attribution_mark.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
-import 'package:giphy_picker/src/widgets/giphy_search_text.dart';
 import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
 /// Provides the UI for searching Giphy gif images.
@@ -44,7 +43,7 @@ class _GiphySearchViewState extends State<GiphySearchView> {
     final giphy = GiphyContext.of(context);
 
     return Column(children: <Widget>[
-      giphy.searchText(
+      giphy.searchTextBuilder(
         context,
         _textController,
         giphy.searchHintText,
@@ -80,9 +79,9 @@ class _GiphySearchViewState extends State<GiphySearchView> {
                         )
                       : const Center(child: Text('No results'));
                 } else if (snapshot.hasError) {
-                  return giphy.searchError(context, snapshot.error!);
+                  return giphy.errorBuilder(context, snapshot.error!);
                 }
-                return giphy.searchLoading(context);
+                return giphy.loadingBuilder(context);
               }))
     ]);
   }

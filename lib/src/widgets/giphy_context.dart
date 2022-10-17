@@ -25,9 +25,9 @@ class GiphyContext extends InheritedWidget {
   final bool showGiphyAttribution;
   final String searchHintText;
   final GiphyPreviewType? previewType;
-  final SearchTextBuilder searchText;
-  final SearchLoadingBuilder searchLoading;
-  final SearchErrorBuilder searchError;
+  final SearchTextBuilder searchTextBuilder;
+  final SearchLoadingBuilder loadingBuilder;
+  final SearchErrorBuilder errorBuilder;
 
   /// Debounce delay when searching
   final Duration searchDelay;
@@ -46,12 +46,12 @@ class GiphyContext extends InheritedWidget {
       this.searchHintText = 'Search Giphy',
       this.searchDelay = const Duration(milliseconds: 500),
       this.previewType,
-      SearchTextBuilder? searchText,
-      SearchLoadingBuilder? searchLoading,
-      SearchErrorBuilder? searchError})
-      : searchText = searchText ?? _buildDefaultSearchText,
-        searchLoading = searchLoading ?? _buildDefaultSearchLoading,
-        searchError = searchError ?? _buildDefaultSearchError;
+      SearchTextBuilder? searchTextBuilder,
+      SearchLoadingBuilder? loadingBuilder,
+      SearchErrorBuilder? errorBuilder})
+      : searchTextBuilder = searchTextBuilder ?? _buildDefaultSearchText,
+        loadingBuilder = loadingBuilder ?? _buildDefaultSearchLoading,
+        errorBuilder = errorBuilder ?? _buildDefaultSearchError;
 
   void select(GiphyGif gif) => onSelected?.call(gif);
   void error(dynamic error) => onError?.call(error);
