@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/giphy_picker.dart';
+import 'package:giphy_picker/src/model/giphy_repository.dart';
+import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_text.dart';
+import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
-typedef SearchTextBuilder = Widget Function(
-    BuildContext context,
-    TextEditingController controller,
-    String? hintText,
-    ValueChanged<String> onChanged);
+typedef PageBuilder = Widget Function(BuildContext context, Widget? title);
 
-typedef SearchLoadingBuilder = Widget Function(BuildContext context);
+typedef SearchTextBuilder = Widget Function(BuildContext context,
+    TextEditingController controller, ValueChanged<String> onChanged);
+
+typedef ResultsBuilder = Widget Function(BuildContext context,
+    GiphyRepository repo, ScrollController scrollController);
 
 typedef SearchErrorBuilder = Widget Function(
     BuildContext context, Object error);
@@ -25,8 +28,11 @@ class GiphyContext extends InheritedWidget {
   final bool showGiphyAttribution;
   final String searchHintText;
   final GiphyPreviewType? previewType;
+  final PageBuilder pageBuilder;
   final SearchTextBuilder searchTextBuilder;
-  final SearchLoadingBuilder loadingBuilder;
+  final WidgetBuilder loadingBuilder;
+  final ResultsBuilder resultsBuilder;
+  final WidgetBuilder noResultsBuilder;
   final SearchErrorBuilder errorBuilder;
 
   /// Debounce delay when searching
@@ -46,12 +52,18 @@ class GiphyContext extends InheritedWidget {
       this.searchHintText = 'Search Giphy',
       this.searchDelay = const Duration(milliseconds: 500),
       this.previewType,
+      PageBuilder? pageBuilder,
       SearchTextBuilder? searchTextBuilder,
-      SearchLoadingBuilder? loadingBuilder,
+      WidgetBuilder? loadingBuilder,
+      ResultsBuilder? resultsBuilder,
+      WidgetBuilder? noResultsBuilder,
       SearchErrorBuilder? errorBuilder})
-      : searchTextBuilder = searchTextBuilder ?? _buildDefaultSearchText,
-        loadingBuilder = loadingBuilder ?? _buildDefaultSearchLoading,
-        errorBuilder = errorBuilder ?? _buildDefaultSearchError;
+      : pageBuilder = pageBuilder ?? _buildDefaultPage,
+        searchTextBuilder = searchTextBuilder ?? _buildDefaultSearchText,
+        loadingBuilder = loadingBuilder ?? _buildDefaultLoading,
+        resultsBuilder = resultsBuilder ?? _buildDefaultResults,
+        noResultsBuilder = noResultsBuilder ?? _buildDefaultNoResults,
+        errorBuilder = errorBuilder ?? _buildDefaultError;
 
   void select(GiphyGif gif) => onSelected?.call(gif);
   void error(dynamic error) => onError?.call(error);
@@ -70,19 +82,33 @@ class GiphyContext extends InheritedWidget {
     return giphy;
   }
 
+  static Widget _buildDefaultPage(BuildContext context, Widget? title) =>
+      GiphySearchPage(title: title);
+
   static Widget _buildDefaultSearchText(
     BuildContext context,
     TextEditingController controller,
-    String? hintText,
     ValueChanged<String> onChanged,
   ) =>
-      GiphySearchText(
-          controller: controller, hintText: hintText, onChanged: onChanged);
+      GiphySearchText(controller: controller, onChanged: onChanged);
 
-  static Widget _buildDefaultSearchLoading(BuildContext context) =>
+  static Widget _buildDefaultLoading(BuildContext context) =>
       const Center(child: CircularProgressIndicator());
 
-  static Widget _buildDefaultSearchError(BuildContext context, Object error) =>
+  static Widget _buildDefaultResults(
+    BuildContext context,
+    GiphyRepository repo,
+    ScrollController scrollController,
+  ) =>
+      GiphyThumbnailGrid(
+          key: Key('${repo.hashCode}'),
+          repo: repo,
+          scrollController: scrollController);
+
+  static Widget _buildDefaultNoResults(BuildContext context) =>
+      const Center(child: Text('No results'));
+
+  static Widget _buildDefaultError(BuildContext context, Object error) =>
       Center(
           child: Text(
         error.toString(),

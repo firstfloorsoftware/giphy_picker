@@ -30,7 +30,9 @@ class GiphyPicker {
     String searchHintText = 'Search GIPHY',
     GiphyPreviewType previewType = GiphyPreviewType.previewWebp,
     SearchTextBuilder? searchTextBuilder,
-    SearchLoadingBuilder? loadingBuilder,
+    WidgetBuilder? loadingBuilder,
+    ResultsBuilder? resultsBuilder,
+    WidgetBuilder? noResultsBuilder,
     SearchErrorBuilder? errorBuilder,
   }) async {
     GiphyGif? result;
@@ -58,6 +60,8 @@ class GiphyPicker {
           searchHintText: searchHintText,
           searchTextBuilder: searchTextBuilder,
           loadingBuilder: loadingBuilder,
+          resultsBuilder: resultsBuilder,
+          noResultsBuilder: noResultsBuilder,
           errorBuilder: errorBuilder,
           child: GiphySearchPage(
             title: title,
