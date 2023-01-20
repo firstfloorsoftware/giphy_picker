@@ -1,3 +1,6 @@
+## 3.0.1
+* Improves documentation
+
 ## 3.0.0
 * **Backwards incompatible rewrite**
 * Performance improvements and bugfixes
