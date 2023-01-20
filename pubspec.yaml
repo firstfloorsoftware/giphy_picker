@@ -4,9 +4,9 @@ version: 3.0.0
 homepage: https://github.com/firstfloorsoftware/giphy_picker
 screenshots:
   - description: 'Browsing trending gifs from Giphy'
-    path: examples/screenshots/giphy_picker_demo.gif
+    path: example/screenshots/giphy_picker_demo.gif
   - description: 'Browsing trending gifs from Giphy in dark mode'
-    path: examples/screenshots/giphy_picker_dark_demo.gif
+    path: example/screenshots/giphy_picker_dark_demo.gif
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
