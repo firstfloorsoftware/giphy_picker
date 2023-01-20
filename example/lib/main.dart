@@ -38,10 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Center(
           child: _gif == null
               ? const Text('Pick a gif..')
-              : GiphyImage.original(
-                  gif: _gif!,
-                  showGiphyAttribution: false,
-                ),
+              : GiphyImage.original(gif: _gif!),
         ),
       ),
       floatingActionButton: FloatingActionButton(
