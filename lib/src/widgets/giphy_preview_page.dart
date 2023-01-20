@@ -6,10 +6,15 @@ import 'package:giphy_picker/src/widgets/giphy_image.dart';
 class GiphyPreviewPage extends StatelessWidget {
   final GiphyGif gif;
   final Widget? title;
+  final bool showGiphyAttribution;
   final ValueChanged<GiphyGif>? onSelected;
 
   const GiphyPreviewPage(
-      {required this.gif, required this.onSelected, this.title});
+      {super.key,
+      required this.gif,
+      required this.onSelected,
+      this.title,
+      this.showGiphyAttribution = true});
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +23,23 @@ class GiphyPreviewPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: title, actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.check), onPressed: () => onSelected?.call(gif))
+              icon: const Icon(Icons.check),
+              onPressed: () => onSelected?.call(gif))
         ]),
         body: SafeArea(
-            child: Center(
-                child: GiphyImage.original(
-              gif: gif,
-              width: media.orientation == Orientation.portrait
-                  ? double.maxFinite
-                  : null,
-              height: media.orientation == Orientation.landscape
-                  ? double.maxFinite
-                  : null,
-              fit: BoxFit.contain,
-            )),
-            bottom: false));
+          bottom: false,
+          child: Center(
+              child: GiphyImage.original(
+            gif: gif,
+            width: media.orientation == Orientation.portrait
+                ? double.maxFinite
+                : null,
+            height: media.orientation == Orientation.landscape
+                ? double.maxFinite
+                : null,
+            fit: BoxFit.contain,
+            showGiphyAttribution: showGiphyAttribution,
+          )),
+        ));
   }
 }

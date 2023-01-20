@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:giphy_picker/src/model/giphy_client.dart';
-import 'package:giphy_picker/src/widgets/giphy_overlay.dart';
+import 'package:giphy_picker/src/widgets/giphy_attribution_mark.dart';
 
 /// Loads and renders a Giphy image.
 class GiphyImage extends StatefulWidget {
@@ -11,18 +11,17 @@ class GiphyImage extends StatefulWidget {
   final double? width;
   final double? height;
   final BoxFit? fit;
-  final bool renderGiphyOverlay;
+  final bool showGiphyAttribution;
 
   /// Loads an image from given url.
   const GiphyImage(
-      {Key? key,
+      {super.key,
       this.url,
       this.placeholder,
       this.width,
       this.height,
       this.fit,
-      this.renderGiphyOverlay = true})
-      : super(key: key);
+      this.showGiphyAttribution = true});
 
   /// Loads the original image for given Giphy gif.
   GiphyImage.original(
@@ -32,7 +31,7 @@ class GiphyImage extends StatefulWidget {
       this.width,
       this.height,
       this.fit,
-      this.renderGiphyOverlay = true})
+      this.showGiphyAttribution = true})
       : url = gif.images.original?.url,
         super(key: key ?? Key(gif.id));
 
@@ -44,12 +43,12 @@ class GiphyImage extends StatefulWidget {
       this.width,
       this.height,
       this.fit,
-      this.renderGiphyOverlay = true})
+      this.showGiphyAttribution = true})
       : url = gif.images.originalStill?.url,
         super(key: key ?? Key(gif.id));
 
   @override
-  _GiphyImageState createState() => _GiphyImageState();
+  State<GiphyImage> createState() => _GiphyImageState();
 
   /// Loads the images bytes for given url from Giphy.
   static Future<Uint8List?> load(String? url, {Client? client}) async {
@@ -83,11 +82,12 @@ class _GiphyImageState extends State<GiphyImage> {
           final image = Image.memory(snapshot.data!,
               width: widget.width, height: widget.height, fit: widget.fit);
 
-          if (widget.renderGiphyOverlay) {
-            return GiphyOverlay(child: image);
+          if (widget.showGiphyAttribution) {
+            return GiphyAttributionMark(child: image);
           }
           return image;
         }
-        return widget.placeholder ?? Center(child: CircularProgressIndicator());
+        return widget.placeholder ??
+            const Center(child: CircularProgressIndicator());
       });
 }

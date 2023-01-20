@@ -5,41 +5,56 @@ import 'package:giphy_picker/src/widgets/giphy_preview_page.dart';
 import 'package:giphy_picker/src/widgets/giphy_thumbnail.dart';
 
 /// A selectable grid view of gif thumbnails.
-class GiphyThumbnailGrid extends StatelessWidget {
+class GiphyThumbnailGrid extends StatefulWidget {
   final GiphyRepository repo;
   final ScrollController? scrollController;
 
   const GiphyThumbnailGrid(
-      {Key? key, required this.repo, this.scrollController})
-      : super(key: key);
+      {super.key, required this.repo, this.scrollController});
 
   @override
+  State<GiphyThumbnailGrid> createState() => _GiphyThumbnailGridState();
+}
+
+class _GiphyThumbnailGridState extends State<GiphyThumbnailGrid> {
+  @override
   Widget build(BuildContext context) {
+    final giphy = GiphyContext.of(context);
     return GridView.builder(
-        padding: EdgeInsets.all(10),
-        controller: scrollController,
-        itemCount: repo.totalCount,
+        padding: EdgeInsets.fromLTRB(
+          10,
+          10,
+          10,
+          // bottom padding takes attribution into account
+          giphy.showGiphyAttribution ? 34 : 10,
+        ),
+        controller: widget.scrollController,
+        itemCount: widget.repo.totalCount,
         itemBuilder: (BuildContext context, int index) => GestureDetector(
-            child: GiphyThumbnail(key: Key('$index'), repo: repo, index: index),
+            child: GiphyThumbnail(
+                key: Key('$index'), repo: widget.repo, index: index),
             onTap: () async {
               // display preview page
               final giphy = GiphyContext.of(context);
-              final gif = await repo.get(index);
-              if (giphy.showPreviewPage) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => Theme(
-                      data: giphy.decorator.giphyTheme ?? Theme.of(context),
-                      child: GiphyPreviewPage(
+              final gif = await widget.repo.get(index);
+              if (gif != null) {
+                if (mounted && giphy.showPreviewPage) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => GiphyPreviewPage(
                         gif: gif,
+                        showGiphyAttribution: giphy.showGiphyAttribution,
                         onSelected: giphy.onSelected,
+                        title: gif.title?.isNotEmpty == true
+                            ? Text(gif.title!)
+                            : null,
                       ),
                     ),
-                  ),
-                );
-              } else {
-                giphy.onSelected?.call(gif);
+                  );
+                } else {
+                  giphy.onSelected?.call(gif);
+                }
               }
             }),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

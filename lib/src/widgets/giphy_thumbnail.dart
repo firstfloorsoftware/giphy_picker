@@ -9,11 +9,10 @@ class GiphyThumbnail extends StatefulWidget {
   final Widget? placeholder;
 
   const GiphyThumbnail(
-      {Key? key, required this.repo, required this.index, this.placeholder})
-      : super(key: key);
+      {super.key, required this.repo, required this.index, this.placeholder});
 
   @override
-  _GiphyThumbnailState createState() => _GiphyThumbnailState();
+  State<GiphyThumbnail> createState() => _GiphyThumbnailState();
 }
 
 class _GiphyThumbnailState extends State<GiphyThumbnail> {

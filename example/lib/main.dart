@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/giphy_picker.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Giphy Picker Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
+      home: MyHomePage(title: 'Giphy Picker Demo'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+  final String title;
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -33,32 +37,18 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Center(
           child: _gif == null
-              ? Text('Pick a gif..')
+              ? const Text('Pick a gif..')
               : GiphyImage.original(gif: _gif!),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
-        child: Icon(Icons.search),
+        child: const Icon(Icons.search),
         onPressed: () async {
           // request your Giphy API key at https://developers.giphy.com/
           final gif = await GiphyPicker.pickGif(
             context: context,
-            apiKey: '[YOUR GIPHY APIKEY]',
-            fullScreenDialog: false,
-            previewType: GiphyPreviewType.previewWebp,
-            decorator: GiphyDecorator(
-              showAppBar: false,
-              searchElevation: 4,
-              giphyTheme: ThemeData.dark().copyWith(
-                inputDecorationTheme: InputDecorationTheme(
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.zero,
-                ),
-              ),
-            ),
+            // YOUR GIPHY APIKEY HERE
+            apiKey: '',
           );
 
           if (gif != null) {

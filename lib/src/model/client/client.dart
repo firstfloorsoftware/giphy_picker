@@ -98,24 +98,41 @@ class GiphyClient {
             ..putIfAbsent('api_key', () => _apiKey),
         )
         .toString();
-    final response = await _client.get(Uri.parse(uriString));
 
-    if (response.statusCode == 200) {
-      return response;
-    } else {
-      throw GiphyClientError(response.statusCode, response.body);
+    try {
+      final response = await _client.get(Uri.parse(uriString));
+      if (response.statusCode == 200) {
+        return response;
+      }
+      throw GiphyError.fromJson(response.statusCode,
+          json.decode(response.body) as Map<String, dynamic>);
+    } on GiphyError {
+      rethrow;
+    } catch (e) {
+      throw GiphyError(-1, e.toString());
     }
   }
 }
 
-class GiphyClientError {
+class GiphyError {
   final int statusCode;
-  final String exception;
+  final String message;
 
-  GiphyClientError(this.statusCode, this.exception);
+  GiphyError(this.statusCode, this.message);
+
+  factory GiphyError.fromJson(int statusCode, Map<String, dynamic> json) {
+    final meta = json.containsKey('meta')
+        ? GiphyMeta.fromJson(json['meta'] as Map<String, dynamic>)
+        : null;
+
+    if (meta != null) {
+      return GiphyError(meta.status, meta.msg);
+    }
+    return GiphyError(statusCode, 'Unknown error');
+  }
 
   @override
   String toString() {
-    return 'GiphyClientError{statusCode: $statusCode, exception: $exception}';
+    return '$message (status $statusCode)';
   }
 }

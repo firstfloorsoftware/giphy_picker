@@ -2,13 +2,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_repository.dart';
 import 'package:giphy_picker/src/utils/debouncer.dart';
+import 'package:giphy_picker/src/widgets/giphy_attribution_mark.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
-import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
 /// Provides the UI for searching Giphy gif images.
 class GiphySearchView extends StatefulWidget {
+  const GiphySearchView({super.key});
+
   @override
-  _GiphySearchViewState createState() => _GiphySearchViewState();
+  State<GiphySearchView> createState() => _GiphySearchViewState();
 }
 
 class _GiphySearchViewState extends State<GiphySearchView> {
@@ -20,11 +22,9 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   @override
   void initState() {
     // initiate search on next frame (we need context)
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final giphy = GiphyContext.of(context);
-      _debouncer = Debouncer(
-        delay: giphy.searchDelay,
-      );
+      _debouncer = Debouncer(delay: giphy.searchDelay);
       _search(giphy);
     });
     super.initState();
@@ -40,35 +40,12 @@ class _GiphySearchViewState extends State<GiphySearchView> {
   @override
   Widget build(BuildContext context) {
     final giphy = GiphyContext.of(context);
-    final giphyDecorator = giphy.decorator;
-
-    final inputDecoration = InputDecoration(
-      hintText: giphy.searchText,
-    );
-    if (giphyDecorator.giphyTheme != null) {
-      inputDecoration
-          .applyDefaults(giphyDecorator.giphyTheme!.inputDecorationTheme);
-    }
 
     return Column(children: <Widget>[
-      Material(
-        elevation: giphyDecorator.searchElevation,
-        color: giphyDecorator.giphyTheme?.scaffoldBackgroundColor,
-        child: Row(
-          children: [
-            if (!giphyDecorator.showAppBar) BackButton(),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: TextField(
-                  controller: _textController,
-                  decoration: inputDecoration,
-                  onChanged: (value) => _delayedSearch(giphy, value),
-                ),
-              ),
-            ),
-          ],
-        ),
+      giphy.searchTextBuilder(
+        context,
+        _textController,
+        (value) => _delayedSearch(giphy, value),
       ),
       Expanded(
           child: StreamBuilder(
@@ -76,29 +53,32 @@ class _GiphySearchViewState extends State<GiphySearchView> {
               builder: (BuildContext context,
                   AsyncSnapshot<GiphyRepository> snapshot) {
                 if (snapshot.hasData) {
-                  return snapshot.data!.totalCount > 0
-                      ? NotificationListener(
-                          child: RefreshIndicator(
-                              child: GiphyThumbnailGrid(
-                                  key: Key('${snapshot.data.hashCode}'),
-                                  repo: snapshot.data!,
-                                  scrollController: _scrollController),
-                              onRefresh: () =>
-                                  _search(giphy, term: _textController.text)),
-                          onNotification: (n) {
-                            // hide keyboard when scrolling
-                            if (n is UserScrollNotification) {
-                              FocusScope.of(context).requestFocus(FocusNode());
-                              return true;
-                            }
-                            return false;
-                          },
-                        )
-                      : Center(child: Text('No results'));
+                  if (snapshot.data!.totalCount > 0) {
+                    final child = giphy.resultsBuilder(
+                        context, snapshot.data!, _scrollController);
+                    return NotificationListener(
+                      child: RefreshIndicator(
+                          child: giphy.showGiphyAttribution
+                              ? GiphyAttributionMark(child: child)
+                              : child,
+                          onRefresh: () =>
+                              _search(giphy, term: _textController.text)),
+                      onNotification: (n) {
+                        // hide keyboard when scrolling
+                        if (n is UserScrollNotification) {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          return true;
+                        }
+                        return false;
+                      },
+                    );
+                  } else {
+                    return giphy.noResultsBuilder(context);
+                  }
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('An error occurred'));
+                  return giphy.errorBuilder(context, snapshot.error!);
                 }
-                return Center(child: CircularProgressIndicator());
+                return giphy.loadingBuilder(context);
               }))
     ]);
   }
@@ -142,7 +122,6 @@ class _GiphySearchViewState extends State<GiphySearchView> {
       if (mounted) {
         _repoController.addError(error);
       }
-      giphy.onError?.call(error);
     }
   }
 }

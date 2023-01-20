@@ -1,19 +1,26 @@
 name: giphy_picker
-description: A plugin that allows you to pick animated GIF images from Giphy.
-version: 2.0.0
+description: Pick animated GIF images from Giphy.
+version: 3.0.0
 homepage: https://github.com/firstfloorsoftware/giphy_picker
+screenshots:
+  - description: 'Browsing trending gifs from Giphy'
+    path: examples/screenshots/giphy_picker_demo.gif
+  - description: 'Browsing trending gifs from Giphy in dark mode'
+    path: examples/screenshots/giphy_picker_dark_demo.gif
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.6 <3.0.0"
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.0
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
 
 flutter:
   assets:

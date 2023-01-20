@@ -3,17 +3,15 @@ library giphy_picker;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/model/giphy_client.dart';
-import 'package:giphy_picker/src/model/giphy_decorator.dart';
 import 'package:giphy_picker/src/model/giphy_preview_types.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 
 export 'package:giphy_picker/src/model/giphy_client.dart';
 export 'package:giphy_picker/src/widgets/giphy_image.dart';
-export 'package:giphy_picker/src/model/giphy_decorator.dart';
 export 'package:giphy_picker/src/model/giphy_preview_types.dart';
 
-typedef ErrorListener = void Function(dynamic error);
+typedef ErrorListener = void Function(GiphyError error);
 
 /// Provides Giphy picker functionality.
 class GiphyPicker {
@@ -27,22 +25,22 @@ class GiphyPicker {
     Widget? title,
     ErrorListener? onError,
     bool showPreviewPage = true,
-    GiphyDecorator? decorator,
+    bool showGiphyAttribution = true,
     bool fullScreenDialog = true,
-    String searchText = 'Search GIPHY',
-    GiphyPreviewType? previewType,
+    String searchHintText = 'Search GIPHY',
+    GiphyPreviewType previewType = GiphyPreviewType.previewWebp,
+    SearchTextBuilder? searchTextBuilder,
+    WidgetBuilder? loadingBuilder,
+    ResultsBuilder? resultsBuilder,
+    WidgetBuilder? noResultsBuilder,
+    SearchErrorBuilder? errorBuilder,
   }) async {
     GiphyGif? result;
-    final _decorator = decorator ?? GiphyDecorator();
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => GiphyContext(
-          decorator: _decorator,
-          previewType: previewType ?? GiphyPreviewType.previewGif,
-          child: GiphySearchPage(
-            title: title,
-          ),
+          previewType: previewType,
           apiKey: apiKey,
           rating: rating,
           language: lang,
@@ -58,7 +56,16 @@ class GiphyPicker {
             Navigator.pop(context);
           },
           showPreviewPage: showPreviewPage,
-          searchText: searchText,
+          showGiphyAttribution: showGiphyAttribution,
+          searchHintText: searchHintText,
+          searchTextBuilder: searchTextBuilder,
+          loadingBuilder: loadingBuilder,
+          resultsBuilder: resultsBuilder,
+          noResultsBuilder: noResultsBuilder,
+          errorBuilder: errorBuilder,
+          child: GiphySearchPage(
+            title: title,
+          ),
         ),
         fullscreenDialog: fullScreenDialog,
       ),
@@ -67,16 +74,16 @@ class GiphyPicker {
     return result;
   }
 
-  static void _showErrorDialog(BuildContext context, dynamic error) {
+  static void _showErrorDialog(BuildContext context, GiphyError error) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Giphy error'),
-          content: Text('An error occurred. $error'),
+          title: const Text('Giphy error'),
+          content: Text(error.toString()),
           actions: <Widget>[
             TextButton(
-              child: Text("Close"),
+              child: const Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
