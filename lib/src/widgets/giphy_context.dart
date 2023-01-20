@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/giphy_picker.dart';
 import 'package:giphy_picker/src/model/giphy_repository.dart';
+import 'package:giphy_picker/src/widgets/giphy_error_view.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_text.dart';
 import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
@@ -109,12 +110,5 @@ class GiphyContext extends InheritedWidget {
       const Center(child: Text('No results'));
 
   static Widget _buildDefaultError(BuildContext context, Object error) =>
-      Center(
-          child: Text(
-        error.toString(),
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1!
-            .copyWith(color: Theme.of(context).errorColor),
-      ));
+      GiphyErrorView(error: error);
 }
