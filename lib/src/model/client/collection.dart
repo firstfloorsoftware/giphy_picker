@@ -1,5 +1,6 @@
 import 'package:giphy_picker/src/model/client/gif.dart';
 
+/// Represents a collection of GIF images, usually the result of a search operation.
 class GiphyCollection {
   final List<GiphyGif> data;
   final GiphyPagination? pagination;
@@ -46,6 +47,7 @@ class GiphyCollection {
   int get hashCode => data.hashCode ^ pagination.hashCode ^ meta.hashCode;
 }
 
+/// Contains information relating to the number of total results available as well as the number of results fetched and their relative positions.
 class GiphyPagination {
   final int totalCount;
   final int count;
@@ -86,6 +88,7 @@ class GiphyPagination {
   int get hashCode => totalCount.hashCode ^ count.hashCode ^ offset.hashCode;
 }
 
+/// Contains basic information regarding the response and its status.
 class GiphyMeta {
   final int status;
   final String msg;

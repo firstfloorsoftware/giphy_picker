@@ -6,14 +6,18 @@ import 'package:giphy_picker/src/widgets/giphy_search_page.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_text.dart';
 import 'package:giphy_picker/src/widgets/giphy_thumbnail_grid.dart';
 
+/// Defines the function for building pages.
 typedef PageBuilder = Widget Function(BuildContext context, Widget? title);
 
+/// Defines the function for building search text editors.
 typedef SearchTextBuilder = Widget Function(BuildContext context,
     TextEditingController controller, ValueChanged<String> onChanged);
 
+/// Defines the function for displaying search results.
 typedef ResultsBuilder = Widget Function(BuildContext context,
     GiphyRepository repo, ScrollController scrollController);
 
+/// Defines the function for displaying runtime errors.
 typedef SearchErrorBuilder = Widget Function(
     BuildContext context, Object error);
 

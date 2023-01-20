@@ -1,5 +1,5 @@
 name: giphy_picker
-description: Pick animated GIF images from Giphy.
+description: A fast and customizable animated GIF picker for your flutter app.
 version: 3.0.0
 homepage: https://github.com/firstfloorsoftware/giphy_picker
 screenshots:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 
+/// Provides a default text editor implementation for search operations.
 class GiphySearchText extends StatelessWidget {
   final TextEditingController controller;
   final ValueChanged<String>? onChanged;

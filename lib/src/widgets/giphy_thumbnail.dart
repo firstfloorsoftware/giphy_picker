@@ -8,6 +8,7 @@ class GiphyThumbnail extends StatefulWidget {
   final int index;
   final Widget? placeholder;
 
+  /// Creates a thumbnail for given index in the repository.
   const GiphyThumbnail(
       {super.key, required this.repo, required this.index, this.placeholder});
 

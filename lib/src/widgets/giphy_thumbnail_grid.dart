@@ -9,6 +9,7 @@ class GiphyThumbnailGrid extends StatefulWidget {
   final GiphyRepository repo;
   final ScrollController? scrollController;
 
+  /// Creates a grid for given repository.
   const GiphyThumbnailGrid(
       {super.key, required this.repo, this.scrollController});
 

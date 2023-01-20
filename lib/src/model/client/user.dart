@@ -1,3 +1,4 @@
+/// Contains information about the user associated with a GIF and URLs to assets such as that user's avatar image, GIPHY profile, and more.
 class GiphyUser {
   final String? avatarUrl;
   final String? bannerUrl;

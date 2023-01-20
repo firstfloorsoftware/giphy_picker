@@ -6,18 +6,21 @@ import 'package:giphy_picker/src/model/client/languages.dart';
 import 'package:giphy_picker/src/model/client/rating.dart';
 import 'package:http/http.dart';
 
+/// The client for accessing the Giphy API.
 class GiphyClient {
   static final baseUri = Uri(scheme: 'https', host: 'api.giphy.com');
 
   final String _apiKey;
   final Client _client;
 
+  /// Creates the client using specified API key.
   GiphyClient({
     required String apiKey,
     Client? client,
   })  : _apiKey = apiKey,
         _client = client ?? Client();
 
+  /// Returns a list of the most relevant and engaging content each and every day.
   Future<GiphyCollection> trending({
     int offset = 0,
     int limit = 30,
@@ -36,6 +39,7 @@ class GiphyClient {
     );
   }
 
+  /// Searches for GIF and/or Sticker images.
   Future<GiphyCollection> search(
     String query, {
     int offset = 0,
@@ -58,6 +62,7 @@ class GiphyClient {
     );
   }
 
+  /// Returns a single random gif or sticker related to the word or phrase entered.
   Future<GiphyGif> random({
     String? tag,
     String rating = GiphyRating.g,
@@ -74,6 +79,7 @@ class GiphyClient {
     );
   }
 
+  /// Get GIF by ID returns a GIF’s metadata based on the GIF ID specified.
   Future<GiphyGif> byId(String id) async =>
       _fetchGif(baseUri.replace(path: 'v1/gifs/$id'));
 
@@ -114,6 +120,7 @@ class GiphyClient {
   }
 }
 
+/// Represents an error.
 class GiphyError {
   final int statusCode;
   final String message;

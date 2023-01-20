@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// A nicely formatted error view, used in case things go south.
 class GiphyErrorView extends StatelessWidget {
   final Object error;
   final Function()? retry;

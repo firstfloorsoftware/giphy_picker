@@ -1,6 +1,7 @@
 import 'package:giphy_picker/src/model/client/images.dart';
 import 'package:giphy_picker/src/model/client/user.dart';
 
+/// Represents a single GIF object which includes the URLs of different formats and sizes.
 class GiphyGif {
   final String? title;
   final String? type;
