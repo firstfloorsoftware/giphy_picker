@@ -1,3 +1,7 @@
+## 3.0.2
+* Fixes linter warnings
+* Updates http dependency
+
 ## 3.0.1
 * Improves documentation
 
