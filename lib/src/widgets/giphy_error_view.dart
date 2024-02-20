@@ -15,7 +15,7 @@ class GiphyErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = color ?? Theme.of(context).errorColor;
+    final c = color ?? Theme.of(context).colorScheme.error;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -25,7 +25,7 @@ class GiphyErrorView extends StatelessWidget {
         Text(
           error.toString(),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(color: c),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: c),
         )
       ]),
     );
