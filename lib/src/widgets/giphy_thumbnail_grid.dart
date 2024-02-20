@@ -39,7 +39,7 @@ class _GiphyThumbnailGridState extends State<GiphyThumbnailGrid> {
               final giphy = GiphyContext.of(context);
               final gif = await widget.repo.get(index);
               if (gif != null) {
-                if (mounted && giphy.showPreviewPage) {
+                if (context.mounted && giphy.showPreviewPage) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
