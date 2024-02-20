@@ -47,6 +47,7 @@ class _GiphyThumbnailGridState extends State<GiphyThumbnailGrid> {
                         gif: gif,
                         showGiphyAttribution: giphy.showGiphyAttribution,
                         onSelected: giphy.onSelected,
+                        appBarBuilder: giphy.appBarBuilder,
                         title: gif.title?.isNotEmpty == true
                             ? Text(gif.title!)
                             : null,

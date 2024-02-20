@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:giphy_picker/src/widgets/giphy_context.dart';
 import 'package:giphy_picker/src/widgets/giphy_search_view.dart';
 
-/// The default implementation of a giphy search page.
+/// The giphy search page.
 class GiphySearchPage extends StatelessWidget {
   final Widget? title;
 
@@ -10,10 +10,11 @@ class GiphySearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final giphy = GiphyContext.of(context);
     return Scaffold(
-      appBar: AppBar(title: title),
+      appBar: giphy.appBarBuilder(context, title: title),
       body: SafeArea(
-        bottom: GiphyContext.of(context).showGiphyAttribution,
+        bottom: giphy.showGiphyAttribution,
         child: const GiphySearchView(),
       ),
     );
