@@ -1,4 +1,5 @@
 ## 3.0.2
+* Adds appBarBuilder for customizing AppBar in search and preview pages
 * Fixes linter warnings
 * Updates http dependency
 
